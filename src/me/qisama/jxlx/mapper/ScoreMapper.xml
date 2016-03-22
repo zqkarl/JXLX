@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.qisama.jxlx.dao.ScoreMapper" >
+  <resultMap id="BaseResultMap" type="me.qisama.jxlx.entity.Score" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="exam_id" property="examId" jdbcType="INTEGER" />
+    <result column="student_id" property="studentId" jdbcType="BIGINT" />
+    <result column="teacher_comment" property="teacherComment" jdbcType="VARCHAR" />
+    <result column="parent_comment_state" property="parentCommentState" jdbcType="INTEGER" />
+    <result column="parent_comment" property="parentComment" jdbcType="VARCHAR" />
+    <result column="entry_teacher_id" property="entryTeacherId" jdbcType="INTEGER" />
+    <result column="entry_time" property="entryTime" jdbcType="VARCHAR" />
+    <result column="modify_teacher_id" property="modifyTeacherId" jdbcType="VARCHAR" />
+    <result column="modify_time" property="modifyTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, exam_id, student_id, teacher_comment, parent_comment_state, parent_comment, entry_teacher_id, 
+    entry_time, modify_teacher_id, modify_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="me.qisama.jxlx.entity.ScoreExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from q_score
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from q_score
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from q_score
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="me.qisama.jxlx.entity.ScoreExample" >
+    delete from q_score
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="me.qisama.jxlx.entity.Score" >
+    insert into q_score (id, exam_id, student_id, 
+      teacher_comment, parent_comment_state, parent_comment, 
+      entry_teacher_id, entry_time, modify_teacher_id, 
+      modify_time)
+    values (#{id,jdbcType=BIGINT}, #{examId,jdbcType=INTEGER}, #{studentId,jdbcType=BIGINT}, 
+      #{teacherComment,jdbcType=VARCHAR}, #{parentCommentState,jdbcType=INTEGER}, #{parentComment,jdbcType=VARCHAR}, 
+      #{entryTeacherId,jdbcType=INTEGER}, #{entryTime,jdbcType=VARCHAR}, #{modifyTeacherId,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="me.qisama.jxlx.entity.Score" >
+    insert into q_score
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="examId != null" >
+        exam_id,
+      </if>
+      <if test="studentId != null" >
+        student_id,
+      </if>
+      <if test="teacherComment != null" >
+        teacher_comment,
+      </if>
+      <if test="parentCommentState != null" >
+        parent_comment_state,
+      </if>
+      <if test="parentComment != null" >
+        parent_comment,
+      </if>
+      <if test="entryTeacherId != null" >
+        entry_teacher_id,
+      </if>
+      <if test="entryTime != null" >
+        entry_time,
+      </if>
+      <if test="modifyTeacherId != null" >
+        modify_teacher_id,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="examId != null" >
+        #{examId,jdbcType=INTEGER},
+      </if>
+      <if test="studentId != null" >
+        #{studentId,jdbcType=BIGINT},
+      </if>
+      <if test="teacherComment != null" >
+        #{teacherComment,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCommentState != null" >
+        #{parentCommentState,jdbcType=INTEGER},
+      </if>
+      <if test="parentComment != null" >
+        #{parentComment,jdbcType=VARCHAR},
+      </if>
+      <if test="entryTeacherId != null" >
+        #{entryTeacherId,jdbcType=INTEGER},
+      </if>
+      <if test="entryTime != null" >
+        #{entryTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTeacherId != null" >
+        #{modifyTeacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="me.qisama.jxlx.entity.ScoreExample" resultType="java.lang.Integer" >
+    select count(*) from q_score
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update q_score
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.examId != null" >
+        exam_id = #{record.examId,jdbcType=INTEGER},
+      </if>
+      <if test="record.studentId != null" >
+        student_id = #{record.studentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.teacherComment != null" >
+        teacher_comment = #{record.teacherComment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentCommentState != null" >
+        parent_comment_state = #{record.parentCommentState,jdbcType=INTEGER},
+      </if>
+      <if test="record.parentComment != null" >
+        parent_comment = #{record.parentComment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.entryTeacherId != null" >
+        entry_teacher_id = #{record.entryTeacherId,jdbcType=INTEGER},
+      </if>
+      <if test="record.entryTime != null" >
+        entry_time = #{record.entryTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTeacherId != null" >
+        modify_teacher_id = #{record.modifyTeacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        modify_time = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update q_score
+    set id = #{record.id,jdbcType=BIGINT},
+      exam_id = #{record.examId,jdbcType=INTEGER},
+      student_id = #{record.studentId,jdbcType=BIGINT},
+      teacher_comment = #{record.teacherComment,jdbcType=VARCHAR},
+      parent_comment_state = #{record.parentCommentState,jdbcType=INTEGER},
+      parent_comment = #{record.parentComment,jdbcType=VARCHAR},
+      entry_teacher_id = #{record.entryTeacherId,jdbcType=INTEGER},
+      entry_time = #{record.entryTime,jdbcType=VARCHAR},
+      modify_teacher_id = #{record.modifyTeacherId,jdbcType=VARCHAR},
+      modify_time = #{record.modifyTime,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="me.qisama.jxlx.entity.Score" >
+    update q_score
+    <set >
+      <if test="examId != null" >
+        exam_id = #{examId,jdbcType=INTEGER},
+      </if>
+      <if test="studentId != null" >
+        student_id = #{studentId,jdbcType=BIGINT},
+      </if>
+      <if test="teacherComment != null" >
+        teacher_comment = #{teacherComment,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCommentState != null" >
+        parent_comment_state = #{parentCommentState,jdbcType=INTEGER},
+      </if>
+      <if test="parentComment != null" >
+        parent_comment = #{parentComment,jdbcType=VARCHAR},
+      </if>
+      <if test="entryTeacherId != null" >
+        entry_teacher_id = #{entryTeacherId,jdbcType=INTEGER},
+      </if>
+      <if test="entryTime != null" >
+        entry_time = #{entryTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTeacherId != null" >
+        modify_teacher_id = #{modifyTeacherId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.qisama.jxlx.entity.Score" >
+    update q_score
+    set exam_id = #{examId,jdbcType=INTEGER},
+      student_id = #{studentId,jdbcType=BIGINT},
+      teacher_comment = #{teacherComment,jdbcType=VARCHAR},
+      parent_comment_state = #{parentCommentState,jdbcType=INTEGER},
+      parent_comment = #{parentComment,jdbcType=VARCHAR},
+      entry_teacher_id = #{entryTeacherId,jdbcType=INTEGER},
+      entry_time = #{entryTime,jdbcType=VARCHAR},
+      modify_teacher_id = #{modifyTeacherId,jdbcType=VARCHAR},
+      modify_time = #{modifyTime,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

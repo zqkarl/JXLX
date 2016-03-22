@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.qisama.jxlx.dao.RoleMapper" >
+  <resultMap id="BaseResultMap" type="me.qisama.jxlx.entity.Role" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="role" property="role" jdbcType="VARCHAR" />
+    <result column="role_desc" property="roleDesc" jdbcType="VARCHAR" />
+    <result column="states" property="states" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, role, role_desc, states
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="me.qisama.jxlx.entity.RoleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from q_role
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from q_role
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from q_role
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="me.qisama.jxlx.entity.RoleExample" >
+    delete from q_role
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="me.qisama.jxlx.entity.Role" useGeneratedKeys="true" keyProperty="id">
+    insert into q_role (id, role, role_desc, 
+      states)
+    values (#{id,jdbcType=BIGINT}, #{role,jdbcType=VARCHAR}, #{roleDesc,jdbcType=VARCHAR}, 
+      #{states,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="me.qisama.jxlx.entity.Role" >
+    insert into q_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="role != null" >
+        role,
+      </if>
+      <if test="roleDesc != null" >
+        role_desc,
+      </if>
+      <if test="states != null" >
+        states,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="role != null" >
+        #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="roleDesc != null" >
+        #{roleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="states != null" >
+        #{states,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="me.qisama.jxlx.entity.RoleExample" resultType="java.lang.Integer" >
+    select count(*) from q_role
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update q_role
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.role != null" >
+        role = #{record.role,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roleDesc != null" >
+        role_desc = #{record.roleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.states != null" >
+        states = #{record.states,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update q_role
+    set id = #{record.id,jdbcType=BIGINT},
+      role = #{record.role,jdbcType=VARCHAR},
+      role_desc = #{record.roleDesc,jdbcType=VARCHAR},
+      states = #{record.states,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="me.qisama.jxlx.entity.Role" >
+    update q_role
+    <set >
+      <if test="role != null" >
+        role = #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="roleDesc != null" >
+        role_desc = #{roleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="states != null" >
+        states = #{states,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.qisama.jxlx.entity.Role" >
+    update q_role
+    set role = #{role,jdbcType=VARCHAR},
+      role_desc = #{roleDesc,jdbcType=VARCHAR},
+      states = #{states,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

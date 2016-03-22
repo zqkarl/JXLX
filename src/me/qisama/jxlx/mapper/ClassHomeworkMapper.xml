@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.qisama.jxlx.dao.ClassHomeworkMapper" >
+  <resultMap id="BaseResultMap" type="me.qisama.jxlx.entity.ClassHomework" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="class_id" property="classId" jdbcType="VARCHAR" />
+    <result column="homework_id" property="homeworkId" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, class_id, homework_id, date
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="me.qisama.jxlx.entity.ClassHomeworkExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from q_class_homework
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from q_class_homework
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from q_class_homework
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="me.qisama.jxlx.entity.ClassHomeworkExample" >
+    delete from q_class_homework
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="me.qisama.jxlx.entity.ClassHomework" >
+    insert into q_class_homework (id, class_id, homework_id, 
+      date)
+    values (#{id,jdbcType=BIGINT}, #{classId,jdbcType=VARCHAR}, #{homeworkId,jdbcType=VARCHAR}, 
+      #{date,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="me.qisama.jxlx.entity.ClassHomework" >
+    insert into q_class_homework
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="classId != null" >
+        class_id,
+      </if>
+      <if test="homeworkId != null" >
+        homework_id,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="classId != null" >
+        #{classId,jdbcType=VARCHAR},
+      </if>
+      <if test="homeworkId != null" >
+        #{homeworkId,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="me.qisama.jxlx.entity.ClassHomeworkExample" resultType="java.lang.Integer" >
+    select count(*) from q_class_homework
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update q_class_homework
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.classId != null" >
+        class_id = #{record.classId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.homeworkId != null" >
+        homework_id = #{record.homeworkId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.date != null" >
+        date = #{record.date,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update q_class_homework
+    set id = #{record.id,jdbcType=BIGINT},
+      class_id = #{record.classId,jdbcType=VARCHAR},
+      homework_id = #{record.homeworkId,jdbcType=VARCHAR},
+      date = #{record.date,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="me.qisama.jxlx.entity.ClassHomework" >
+    update q_class_homework
+    <set >
+      <if test="classId != null" >
+        class_id = #{classId,jdbcType=VARCHAR},
+      </if>
+      <if test="homeworkId != null" >
+        homework_id = #{homeworkId,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.qisama.jxlx.entity.ClassHomework" >
+    update q_class_homework
+    set class_id = #{classId,jdbcType=VARCHAR},
+      homework_id = #{homeworkId,jdbcType=VARCHAR},
+      date = #{date,jdbcType=DATE}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

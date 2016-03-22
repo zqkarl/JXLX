@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.qisama.jxlx.dao.TeacherMapper" >
+  <resultMap id="BaseResultMap" type="me.qisama.jxlx.entity.Teacher" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="teacher_name" property="teacherName" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="salt" property="salt" jdbcType="VARCHAR" />
+    <result column="subject_id" property="subjectId" jdbcType="INTEGER" />
+    <result column="states" property="states" jdbcType="BIT" />
+  </resultMap>
+  
+  <resultMap type="String" id="RoleSet">
+  	<result column="role" property="role" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap type="String" id="PermissionSet">
+  	<result column="permission" property="permission" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="findRoles" parameterType="java.lang.Long" resultMap="RoleSet">
+  	SELECT DISTINCT q_role.role
+  	FROM q_role,q_teacher,q_teacher_role
+  	WHERE q_teacher.id = #{id}
+  	and q_teacher.id=q_teacher_role.teacher_id 
+  	and q_teacher_role.role_id=q_role.id
+  	and q_role.states=1
+  </select>
+  
+  <select id="findPermissions" parameterType="java.lang.Long" resultMap="PermissionSet">
+  	SELECT DISTINCT permission
+  	FROM q_resource,q_teacher,q_teacher_role,q_role_resource,q_role
+  	WHERE q_teacher.id = #{id}
+  	and q_teacher.id=q_teacher_role.teacher_id
+  	and q_teacher_role.role_id=q_role.id
+  	and q_role.id=q_role_resource.role_id
+  	and q_role_resource.resource_id = q_resource.id
+  	and q_role.states=1
+  </select>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, teacher_name, password, salt, subject_id, states
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="me.qisama.jxlx.entity.TeacherExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from q_teacher
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from q_teacher
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from q_teacher
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="me.qisama.jxlx.entity.TeacherExample" >
+    delete from q_teacher
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="me.qisama.jxlx.entity.Teacher" useGeneratedKeys="true" keyProperty="id" >
+    insert into q_teacher (id, teacher_name, password, 
+      salt, subject_id, states
+      )
+    values (#{id,jdbcType=BIGINT}, #{teacherName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{salt,jdbcType=VARCHAR}, #{subjectId,jdbcType=INTEGER}, #{states,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="me.qisama.jxlx.entity.Teacher" >
+    insert into q_teacher
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="teacherName != null" >
+        teacher_name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="salt != null" >
+        salt,
+      </if>
+      <if test="subjectId != null" >
+        subject_id,
+      </if>
+      <if test="states != null" >
+        states,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="teacherName != null" >
+        #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null" >
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectId != null" >
+        #{subjectId,jdbcType=INTEGER},
+      </if>
+      <if test="states != null" >
+        #{states,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="me.qisama.jxlx.entity.TeacherExample" resultType="java.lang.Integer" >
+    select count(*) from q_teacher
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update q_teacher
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.teacherName != null" >
+        teacher_name = #{record.teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salt != null" >
+        salt = #{record.salt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectId != null" >
+        subject_id = #{record.subjectId,jdbcType=INTEGER},
+      </if>
+      <if test="record.states != null" >
+        states = #{record.states,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update q_teacher
+    set id = #{record.id,jdbcType=BIGINT},
+      teacher_name = #{record.teacherName,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      salt = #{record.salt,jdbcType=VARCHAR},
+      subject_id = #{record.subjectId,jdbcType=INTEGER},
+      states = #{record.states,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="me.qisama.jxlx.entity.Teacher" >
+    update q_teacher
+    <set >
+      <if test="teacherName != null" >
+        teacher_name = #{teacherName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null" >
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectId != null" >
+        subject_id = #{subjectId,jdbcType=INTEGER},
+      </if>
+      <if test="states != null" >
+        states = #{states,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.qisama.jxlx.entity.Teacher" >
+    update q_teacher
+    set teacher_name = #{teacherName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
+      subject_id = #{subjectId,jdbcType=INTEGER},
+      states = #{states,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

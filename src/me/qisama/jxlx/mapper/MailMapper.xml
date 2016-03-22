@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.qisama.jxlx.dao.MailMapper" >
+  <resultMap id="BaseResultMap" type="me.qisama.jxlx.entity.Mail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="source" property="source" jdbcType="VARCHAR" />
+    <result column="from_id" property="fromId" jdbcType="VARCHAR" />
+    <result column="to_id" property="toId" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="isread" property="isread" jdbcType="INTEGER" />
+    <result column="reply_id" property="replyId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, source, from_id, to_id, title, content, time, isread, reply_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="me.qisama.jxlx.entity.MailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from q_mail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from q_mail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from q_mail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="me.qisama.jxlx.entity.MailExample" >
+    delete from q_mail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="me.qisama.jxlx.entity.Mail" >
+    insert into q_mail (id, source, from_id, 
+      to_id, title, content, 
+      time, isread, reply_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{source,jdbcType=VARCHAR}, #{fromId,jdbcType=VARCHAR}, 
+      #{toId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{time,jdbcType=TIMESTAMP}, #{isread,jdbcType=INTEGER}, #{replyId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="me.qisama.jxlx.entity.Mail" >
+    insert into q_mail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="fromId != null" >
+        from_id,
+      </if>
+      <if test="toId != null" >
+        to_id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="isread != null" >
+        isread,
+      </if>
+      <if test="replyId != null" >
+        reply_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="fromId != null" >
+        #{fromId,jdbcType=VARCHAR},
+      </if>
+      <if test="toId != null" >
+        #{toId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isread != null" >
+        #{isread,jdbcType=INTEGER},
+      </if>
+      <if test="replyId != null" >
+        #{replyId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="me.qisama.jxlx.entity.MailExample" resultType="java.lang.Integer" >
+    select count(*) from q_mail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update q_mail
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.source != null" >
+        source = #{record.source,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fromId != null" >
+        from_id = #{record.fromId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.toId != null" >
+        to_id = #{record.toId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.time != null" >
+        time = #{record.time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isread != null" >
+        isread = #{record.isread,jdbcType=INTEGER},
+      </if>
+      <if test="record.replyId != null" >
+        reply_id = #{record.replyId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update q_mail
+    set id = #{record.id,jdbcType=INTEGER},
+      source = #{record.source,jdbcType=VARCHAR},
+      from_id = #{record.fromId,jdbcType=VARCHAR},
+      to_id = #{record.toId,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
+      time = #{record.time,jdbcType=TIMESTAMP},
+      isread = #{record.isread,jdbcType=INTEGER},
+      reply_id = #{record.replyId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="me.qisama.jxlx.entity.Mail" >
+    update q_mail
+    <set >
+      <if test="source != null" >
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="fromId != null" >
+        from_id = #{fromId,jdbcType=VARCHAR},
+      </if>
+      <if test="toId != null" >
+        to_id = #{toId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isread != null" >
+        isread = #{isread,jdbcType=INTEGER},
+      </if>
+      <if test="replyId != null" >
+        reply_id = #{replyId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="me.qisama.jxlx.entity.Mail" >
+    update q_mail
+    set source = #{source,jdbcType=VARCHAR},
+      from_id = #{fromId,jdbcType=VARCHAR},
+      to_id = #{toId,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      time = #{time,jdbcType=TIMESTAMP},
+      isread = #{isread,jdbcType=INTEGER},
+      reply_id = #{replyId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
