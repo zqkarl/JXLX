@@ -41,7 +41,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
             $("#addButton").click(function(){
-                $("#addForm").modal();
+                $("#sutdentAddForm").modal();
             });
         });
     </script>
@@ -359,7 +359,7 @@
     <!-- /#wrapper -->
 
     <!-- 模态框（Modal） -->
-    <div class="modal fade" id="addForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="sutdentAddForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
        <div class="modal-dialog">
           <div class="modal-content">
              <div class="modal-header">

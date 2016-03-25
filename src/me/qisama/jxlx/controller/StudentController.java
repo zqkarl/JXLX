@@ -66,8 +66,7 @@ public class StudentController {
 			@RequestParam("classId") String classId,
 			@RequestParam("contactPhone") Integer contactPhone) {	
 		
-		Student student = new Student();
-		student.setId(id);
+		Student student = studentService.selectById(id);
 		student.setStudentName(studentName);
 		student.setClassId(classId);
 		student.setContactPhone(contactPhone);
@@ -86,4 +85,5 @@ public class StudentController {
 		responseStatus.setData(student);
 		return responseStatus;
 	}
+	
 }

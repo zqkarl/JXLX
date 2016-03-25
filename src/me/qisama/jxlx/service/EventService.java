@@ -67,12 +67,12 @@ public class EventService {
 	
 	@Transactional
 	public void delete(int id) {
-		eventDaoImpl.delete(id);
 		List<ClassEvent> classEvents = classEventDaoImpl.selectByEventId(id);
 		for (ClassEvent classEvent : classEvents) {
 			classEventDaoImpl.delete(classEvent.getId());
 		}
 		String event = eventDaoImpl.selectById(id).getTitle();
+		eventDaoImpl.delete(id);
 		logger.info("删除活动: "+event);
 	}
 	

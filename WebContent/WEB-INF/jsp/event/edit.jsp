@@ -228,7 +228,7 @@
 							<div class="event-row col-md-12">
                         		<div class="event-title col-md-2"><span style="color:red">*</span>活动内容：</div>
                         		<div class="event-input col-md-6">
-									<textarea class="form-control" name="title" rows="10"></textarea>
+									<textarea class="form-control" name="content" rows="10"></textarea>
                         		</div>
                         		<div class="event-info col-md-4" ></div>
                         	</div>

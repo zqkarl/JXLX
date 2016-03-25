@@ -114,7 +114,7 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li class="active">
-                        <a href="${pageContext.request.contextPath}/event"><i class="fa fa-fw fa-file"></i> 活动通知</a>
+                        <a href="${pageContext.request.contextPath}/event/student"><i class="fa fa-fw fa-file"></i> 活动通知</a>
                     </li>
                     <li>
                         <a href="${pageContext.request.contextPath}/score"><i class="fa fa-fw fa-info"></i> 排名分析</a>

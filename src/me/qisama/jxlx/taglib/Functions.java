@@ -2,13 +2,18 @@ package me.qisama.jxlx.taglib;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import me.qisama.jxlx.entity.Classe;
 import me.qisama.jxlx.entity.Download;
+import me.qisama.jxlx.entity.Grade;
+import me.qisama.jxlx.entity.Student;
 import me.qisama.jxlx.entity.Subject;
 import me.qisama.jxlx.entity.Teacher;
 import me.qisama.jxlx.service.ClasseService;
 import me.qisama.jxlx.service.EventService;
+import me.qisama.jxlx.service.GradeService;
+import me.qisama.jxlx.service.StudentService;
 import me.qisama.jxlx.service.SubjectService;
 import me.qisama.jxlx.service.TeacherService;
 import me.qisama.jxlx.spring.SpringUtils;
@@ -23,6 +28,17 @@ public class Functions {
 	private static TeacherService teacherService;
 	
 	private static SubjectService subjectService;
+	
+	private static GradeService gradeService;
+	
+	private static StudentService studentService;
+	
+	public static StudentService getStudentService() {
+		if (studentService == null) {
+			studentService = SpringUtils.getBean(StudentService.class);
+		}
+		return studentService;
+	}
 	
 	public static ClasseService getClasseService() {
 		if (classeService == null) {
@@ -50,6 +66,13 @@ public class Functions {
 			subjectService = SpringUtils.getBean(SubjectService.class);
 		}
 		return subjectService;
+	}
+	
+	public static GradeService getGradeService() {
+		if (gradeService == null) {
+			gradeService = SpringUtils.getBean(GradeService.class);
+		}
+		return gradeService;
 	}
 
 	/**
@@ -110,5 +133,40 @@ public class Functions {
 			// TODO: handle exception
 		}
 		return subjectName;
+	}
+	
+	public static String gradeName(Integer gradeId) {
+		String gradeName = "";
+		try {
+			Grade grade = getGradeService().selectById(gradeId);
+			gradeName = grade.getGradeName();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return gradeName;
+	}
+	
+	public static String studentName(Long studentId) {
+		String studentName = "";
+		try {
+			Student student = getStudentService().selectById(studentId);
+			studentName = student.getStudentName();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return studentName;
+	}
+	
+	public static String classNameByStudent(Long studentId) {
+		String className = "";
+		try {
+			Student student = getStudentService().selectById(studentId);
+			Integer classId = Integer.valueOf(student.getClassId());
+			Classe classe = getClasseService().selectById(classId);
+			className = classe.getClassName();
+ 		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return className;
 	}
 }

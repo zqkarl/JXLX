@@ -38,4 +38,11 @@ public class StudentDaoImpl {
 	public Student selectById(Long id) {
 		return studentMapper.selectByPrimaryKey(id);
 	}
+	
+	public List<Student> selectByClassId(Integer classId) {
+		StudentExample studentExample = new StudentExample();
+		Criteria criteria = studentExample.createCriteria();
+		criteria.andClassIdEqualTo(classId.toString());
+		return studentMapper.selectByExample(studentExample);
+	}
 }

@@ -99,7 +99,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="me.qisama.jxlx.entity.Exam" >
+  <insert id="insert" parameterType="me.qisama.jxlx.entity.Exam" useGeneratedKeys="true" keyProperty="id" >
     insert into q_exam (id, subject_id, grade_id, 
       exam_start_time, exam_end_time)
     values (#{id,jdbcType=INTEGER}, #{subjectId,jdbcType=INTEGER}, #{gradeId,jdbcType=INTEGER}, 

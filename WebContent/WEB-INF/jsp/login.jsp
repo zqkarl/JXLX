@@ -15,7 +15,7 @@
 	<div id="wrapper">
 		<div id="login" class="animate form" style="margin-top:10%">
 			<form  action="" autocomplete="on" method="post"> 
-				<h1>家校联系后台登录</h1> 
+				<h1>家校联系系统登录</h1> 
 				<p> 
 					<label for="username" class="uname" data-icon="u" > 教师工号或用户名： </label>
 					<input id="username" name="username" required="required" type="text" value="<shiro:principal/>" placeholder="username"/>

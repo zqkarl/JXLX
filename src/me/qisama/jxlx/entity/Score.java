@@ -7,17 +7,19 @@ public class Score {
 
     private Long studentId;
 
+    private String score;
+
     private String teacherComment;
 
     private Integer parentCommentState;
 
     private String parentComment;
 
-    private Integer entryTeacherId;
+    private Long entryTeacherId;
 
     private String entryTime;
 
-    private String modifyTeacherId;
+    private Long modifyTeacherId;
 
     private String modifyTime;
 
@@ -45,6 +47,14 @@ public class Score {
         this.studentId = studentId;
     }
 
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score == null ? null : score.trim();
+    }
+
     public String getTeacherComment() {
         return teacherComment;
     }
@@ -69,11 +79,11 @@ public class Score {
         this.parentComment = parentComment == null ? null : parentComment.trim();
     }
 
-    public Integer getEntryTeacherId() {
+    public Long getEntryTeacherId() {
         return entryTeacherId;
     }
 
-    public void setEntryTeacherId(Integer entryTeacherId) {
+    public void setEntryTeacherId(Long entryTeacherId) {
         this.entryTeacherId = entryTeacherId;
     }
 
@@ -85,12 +95,12 @@ public class Score {
         this.entryTime = entryTime == null ? null : entryTime.trim();
     }
 
-    public String getModifyTeacherId() {
+    public Long getModifyTeacherId() {
         return modifyTeacherId;
     }
 
-    public void setModifyTeacherId(String modifyTeacherId) {
-        this.modifyTeacherId = modifyTeacherId == null ? null : modifyTeacherId.trim();
+    public void setModifyTeacherId(Long modifyTeacherId) {
+        this.modifyTeacherId = modifyTeacherId;
     }
 
     public String getModifyTime() {
