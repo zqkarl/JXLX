@@ -128,41 +128,12 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <li >
-                        <a href="javascript:;" data-toggle="collapse" data-target="#authority"><i class="fa fa-fw fa-wrench"></i>
-                        信息查看<i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="authority" class="collapse">
-                            <shiro:hasPermission name="teacher:view">
-                            <li>
-                                <a href="${pageContext.request.contextPath}/user"> 教师信息</a>
-                            </li>
-                            </shiro:hasPermission>
-
-                            <shiro:hasPermission name="student:view">
-                            <li>
-                                <a href="${pageContext.request.contextPath}/student"> 学生信息</a>
-                            </li>
-                            </shiro:hasPermission>
-
-                            <shiro:hasPermission name="subject:view">
-                            <li>
-                                <a href="${pageContext.request.contextPath}/subject"> 学科管理</a>
-                            </li>
-                            </shiro:hasPermission>
-
-                            <shiro:hasPermission name="role:view">
-                            <li>
-                                <a href="${pageContext.request.contextPath}/role"> 角色管理</a>
-                            </li>
-                            </shiro:hasPermission>
-
-                            <shiro:hasPermission name="resource:view">
-                            <li>
-                                <a href="${pageContext.request.contextPath}/resource"> 资源管理</a>
-                            </li>
-                            </shiro:hasPermission>
-                        </ul> 
+                	<shiro:hasRole name="家长">
+                	<li >
+                        <a href="${pageContext.request.contextPath}/user"><i class="fa fa-fw fa-archive"></i> 教师信息</a>
                     </li>
+                	</shiro:hasRole>
+                
                     <shiro:hasPermission name="event:create">
                     <li>
                         <a href="${pageContext.request.contextPath}/event/add"><i class="fa fa-fw fa-upload"></i> 上传活动</a>
@@ -183,7 +154,12 @@
 
                     <shiro:hasPermission name="score:view">
                     <li>
-                        <a href="${pageContext.request.contextPath}/score"><i class="fa fa-fw fa-info"></i> 排名分析</a>
+                    	<shiro:lacksRole name="家长">
+                        <a href="${pageContext.request.contextPath}/score/teacher"><i class="fa fa-fw fa-info"></i> 排名分析</a>
+                        </shiro:lacksRole>
+                        <shiro:hasRole name="家长">
+                        <a href="${pageContext.request.contextPath}/score/student"><i class="fa fa-fw fa-info"></i> 排名分析</a>
+                        </shiro:hasRole>
                     </li>
                     </shiro:hasPermission>
                     <li>

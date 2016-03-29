@@ -1,11 +1,13 @@
 package me.qisama.jxlx.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
@@ -18,11 +20,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import me.qisama.jxlx.entity.Exam;
 import me.qisama.jxlx.entity.Score;
 import me.qisama.jxlx.entity.Student;
+import me.qisama.jxlx.entity.Subject;
+import me.qisama.jxlx.entity.Teacher;
 import me.qisama.jxlx.service.ExamService;
 import me.qisama.jxlx.service.GradeService;
 import me.qisama.jxlx.service.ScoreService;
 import me.qisama.jxlx.service.StudentService;
 import me.qisama.jxlx.service.SubjectService;
+import me.qisama.jxlx.service.TeacherService;
 
 @Controller
 @RequestMapping("/exam")
@@ -43,9 +48,23 @@ public class ExamController {
 	@Autowired
 	private ScoreService scoreService;
 	
+	@Autowired
+	private TeacherService teacherService;
+	
 	@RequestMapping(method = RequestMethod.GET)
 	public String list(Model model){
-		model.addAttribute("examList", examService.findAll());
+		List<Exam> eList = new ArrayList<Exam>();
+		if (SecurityUtils.getSubject().hasRole("班主任")) {
+//			String username = (String) SecurityUtils.getSubject().getPrincipal();
+//			Teacher teacher = teacherService.selectTeacherById(Long.valueOf(username));
+			eList = examService.findAll();
+		} else {
+			String username = (String) SecurityUtils.getSubject().getPrincipal();
+			Teacher teacher = teacherService.selectTeacherById(Long.valueOf(username));
+			eList = examService.selectBySubjectId(teacher.getSubjectId());
+		}
+		
+		model.addAttribute("examList", eList);
 		model.addAttribute("gradeList", gradeService.findAll());
 		model.addAttribute("subjectList", subjectService.findAll());
 		return "exam/list";
@@ -53,8 +72,15 @@ public class ExamController {
 	
 	@RequestMapping(value = "/add" , method = RequestMethod.GET)
 	public String createList(Model model) {
+		String username = (String) SecurityUtils.getSubject().getPrincipal();
+		Teacher teacher = teacherService.selectTeacherById(Long.valueOf(username));
 		model.addAttribute("gradeList", gradeService.findAll());
-		model.addAttribute("subjectList", subjectService.findAll());
+		Subject subject = subjectService.selectById(teacher.getSubjectId());
+		List<Subject> subjectList = new ArrayList<Subject>();
+		if (subject != null) {
+			subjectList.add(subject);
+		}
+		model.addAttribute("subjectList", subjectList);
 		return "exam/add";
 	}
 	

@@ -99,10 +99,12 @@ public class TeacherController {
 		String[] roleIds = request.getParameterValues("roleIds");
 		String teacherName = request.getParameter("teacherName");
 		String password = request.getParameter("password");
+		String subjectId = request.getParameter("subjectId");
 		
 		Teacher teacher = new Teacher();
 		teacher.setId(id);
 		teacher.setTeacherName(teacherName);
+		teacher.setSubjectId(Integer.valueOf(subjectId));
 		
 		if (!"".equals("password") && null!=password) {
 			teacher.setPassword(password);

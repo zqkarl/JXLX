@@ -128,7 +128,17 @@
                 });
                 
         }
-
+		
+        function restoreDefault (id) {
+        	$.post("student/restoreDefaultPwd",{studentId:id},
+        			function(d){
+        		if(d.status==1){
+        			alert("恢复默认密码成功");
+        		}
+        		
+        	});
+        }
+        
         function del (id) {
             // body...
             if (confirm('真的要删除么？')) {
@@ -270,13 +280,13 @@
 
                     <shiro:hasPermission name="score:create">
                     <li>
-                        <a href="${pageContext.request.contextPath}/score/add"><i class="fa fa-fw fa-pencil"></i> 成绩录入</a>
+                        <a href="${pageContext.request.contextPath}/exam"><i class="fa fa-fw fa-pencil"></i> 成绩录入</a>
                     </li>
                     </shiro:hasPermission>
 
                     <shiro:hasPermission name="score:view">
                     <li>
-                        <a href="${pageContext.request.contextPath}/score"><i class="fa fa-fw fa-info"></i> 排名分析</a>
+                        <a href="${pageContext.request.contextPath}/score/teacher"><i class="fa fa-fw fa-info"></i> 排名分析</a>
                     </li>
                     </shiro:hasPermission>
                     <li>
@@ -334,7 +344,10 @@
 											<td>${fn:className(student.classId)}</td>
 											<td><c:out value="${student.contactPhone}"/></td>
 											<td>
-                                                <button type="button" id="updateButton" class="btn btn-primary btn-xs" title="修改" ><i class="fa fa-pencil" onclick="showUpdate('${student.id}')"></i></button>
+												<shiro:hasRole name="管理员">
+												<button type="button" class="btn btn-primary btn-xs" title="恢复默认密码" onclick="restoreDefault('${student.id}')"><i class="fa fa-history"></i></button>
+												</shiro:hasRole>
+                                                <button type="button" id="updateButton" class="btn btn-primary btn-xs" title="修改" onclick="showUpdate('${student.id}')"><i class="fa fa-pencil"></i></button>
                                                 <shiro:hasPermission name="student:action">
                                                 <button type="button" class="btn btn-primary btn-xs" title="删除" onclick="del('${student.id}')"><i class="fa fa-trash"></i></button>
                                                 </shiro:hasPermission>

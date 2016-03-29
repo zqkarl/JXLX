@@ -170,20 +170,20 @@
                     </shiro:hasPermission>
 
                     <shiro:hasPermission name="event:view">
-                    <li class="active">
+                    <li>
                         <a href="${pageContext.request.contextPath}/event"><i class="fa fa-fw fa-file"></i> 通知查看</a>
                     </li>
                     </shiro:hasPermission>
 
                     <shiro:hasPermission name="score:create">
-                    <li>
-                        <a href="${pageContext.request.contextPath}/score/add"><i class="fa fa-fw fa-pencil"></i> 成绩录入</a>
+                    <li class="active">
+                        <a href="${pageContext.request.contextPath}/exam"><i class="fa fa-fw fa-pencil"></i> 成绩录入</a>
                     </li>
                     </shiro:hasPermission>
 
                     <shiro:hasPermission name="score:view">
                     <li>
-                        <a href="${pageContext.request.contextPath}/score"><i class="fa fa-fw fa-info"></i> 排名分析</a>
+                        <a href="${pageContext.request.contextPath}/score/teacher"><i class="fa fa-fw fa-info"></i> 排名分析</a>
                     </li>
                     </shiro:hasPermission>
                     <li>
@@ -206,10 +206,10 @@
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-wrench"></i>  <a href="${pageContext.request.contextPath}/event">活动</a>
+                                <i class="fa fa-wrench"></i>  <a href="${pageContext.request.contextPath}/exam">成绩</a>
                             </li>
                             <li class="active">
-                                <i class="fa fa-table"></i> 查看活动
+                                <i class="fa fa-table"></i> 成绩录入
                             </li>
                         </ol>
                     </div>

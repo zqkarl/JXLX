@@ -12,9 +12,9 @@ public class IndexController {
 	public String index(){
 		Subject subject = SecurityUtils.getSubject();
 		if (subject.hasRole("家长")) {
-			return "indexS";
+			return "redirect:/score/student";
 		} else {
-			return "index";
+			return "redirect:/score/teacher";
 		}
 	}
 }

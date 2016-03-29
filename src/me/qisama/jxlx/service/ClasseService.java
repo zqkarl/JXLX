@@ -33,4 +33,8 @@ public class ClasseService {
 	public Classe selectById(Integer id) {
 		return classeDaoImpl.selectById(id);
 	}
+	
+	public List<Classe> selectByGradeId(Integer gradeId) {
+		return classeDaoImpl.selectByGradeId(gradeId);
+	}
 }

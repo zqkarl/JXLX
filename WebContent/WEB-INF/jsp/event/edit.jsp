@@ -128,7 +128,7 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
            <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <li class="active">
+                    <li >
                         <a href="javascript:;" data-toggle="collapse" data-target="#authority"><i class="fa fa-fw fa-wrench"></i>
                         权限管理<i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="authority" class="collapse">
@@ -164,26 +164,26 @@
                         </ul> 
                     </li>
                     <shiro:hasPermission name="event:create">
-                    <li>
+                    <li class="active">
                         <a href="${pageContext.request.contextPath}/event/add"><i class="fa fa-fw fa-upload"></i> 上传活动</a>
                     </li>
                     </shiro:hasPermission>
 
                     <shiro:hasPermission name="event:view">
-                    <li>
+                    <li >
                         <a href="${pageContext.request.contextPath}/event"><i class="fa fa-fw fa-file"></i> 通知查看</a>
                     </li>
                     </shiro:hasPermission>
 
                     <shiro:hasPermission name="score:create">
                     <li>
-                        <a href="${pageContext.request.contextPath}/score/add"><i class="fa fa-fw fa-pencil"></i> 成绩录入</a>
+                        <a href="${pageContext.request.contextPath}/exam"><i class="fa fa-fw fa-pencil"></i> 成绩录入</a>
                     </li>
                     </shiro:hasPermission>
 
                     <shiro:hasPermission name="score:view">
                     <li>
-                        <a href="${pageContext.request.contextPath}/score"><i class="fa fa-fw fa-info"></i> 排名分析</a>
+                        <a href="${pageContext.request.contextPath}/score/teacher"><i class="fa fa-fw fa-info"></i> 排名分析</a>
                     </li>
                     </shiro:hasPermission>
                     <li>

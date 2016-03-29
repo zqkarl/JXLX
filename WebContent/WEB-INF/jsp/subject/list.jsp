@@ -228,13 +228,19 @@
 
                     <shiro:hasPermission name="score:create">
                     <li>
-                        <a href="${pageContext.request.contextPath}/score/add"><i class="fa fa-fw fa-pencil"></i> 成绩录入</a>
+                        <a href="${pageContext.request.contextPath}/exam"><i class="fa fa-fw fa-pencil"></i> 成绩录入</a>
                     </li>
                     </shiro:hasPermission>
-
+                    
+                    
                     <shiro:hasPermission name="score:view">
                     <li>
-                        <a href="${pageContext.request.contextPath}/score"><i class="fa fa-fw fa-info"></i> 排名分析</a>
+                    	<shiro:lacksRole name="家长">
+                        <a href="${pageContext.request.contextPath}/score/teacher"><i class="fa fa-fw fa-info"></i> 排名分析</a>
+                        </shiro:lacksRole>
+                        <shiro:hasRole name="家长">
+                        <a href="${pageContext.request.contextPath}/score/student"><i class="fa fa-fw fa-info"></i> 排名分析</a>
+                        </shiro:hasRole>
                     </li>
                     </shiro:hasPermission>
                     <li>

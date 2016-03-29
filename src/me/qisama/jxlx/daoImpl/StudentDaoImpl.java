@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import me.qisama.jxlx.dao.StudentMapper;
+import me.qisama.jxlx.entity.Score;
 import me.qisama.jxlx.entity.Student;
 import me.qisama.jxlx.entity.StudentExample;
 import me.qisama.jxlx.entity.StudentExample.Criteria;
@@ -26,6 +27,10 @@ public class StudentDaoImpl {
 	
 	public int update(Student student) {
 		return studentMapper.updateByPrimaryKey(student);
+	}
+	
+	public int updateSelective(Student student) {
+		return studentMapper.updateByPrimaryKeySelective(student);
 	}
 	
 	public List<Student> findAll() {

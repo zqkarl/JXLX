@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import me.qisama.jxlx.dao.ExamMapper;
 import me.qisama.jxlx.entity.Exam;
 import me.qisama.jxlx.entity.ExamExample;
+import me.qisama.jxlx.entity.ExamExample.Criteria;
 
 @Repository
 public class ExamDaoImpl {
@@ -31,8 +32,25 @@ public class ExamDaoImpl {
 		return examMapper.selectByPrimaryKey(id);
 	}
 	
+	public List<Exam> selectBySubjectId(Integer subjectId) {
+		ExamExample examExample = new ExamExample();
+		examExample.setOrderByClause("id desc");
+		Criteria criteria = examExample.createCriteria();
+		criteria.andSubjectIdEqualTo(subjectId);
+		return examMapper.selectByExample(examExample);
+	}
+	
+	public List<Exam> selectByGradeId(Integer gradeId) {
+		ExamExample examExample = new ExamExample();
+		examExample.setOrderByClause("id desc");
+		Criteria criteria = examExample.createCriteria();
+		criteria.andGradeIdEqualTo(gradeId);
+		return examMapper.selectByExample(examExample);
+	}
+	
 	public List<Exam> findAll() {
 		ExamExample examExample = new ExamExample();
+		examExample.setOrderByClause("id desc");
 		List<Exam> exams = examMapper.selectByExample(examExample);
 		return exams;
 		

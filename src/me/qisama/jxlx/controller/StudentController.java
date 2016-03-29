@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -86,4 +87,16 @@ public class StudentController {
 		return responseStatus;
 	}
 	
+	@ResponseBody
+	@RequiresRoles("管理员")
+	@RequestMapping(value="/restoreDefaultPwd", method = RequestMethod.POST)
+	public Object restoreDefaultPwd(@RequestParam("studentId") Long studentId) {
+		Student student = new Student();
+		student.setId(studentId);
+		student.setPassword("111111");
+		studentService.restoreDefaultPwd(student);
+		
+		ResponseStatus responseStatus = new ResponseStatus();
+		return responseStatus;
+	}
 }

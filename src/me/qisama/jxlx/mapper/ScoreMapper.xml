@@ -5,7 +5,7 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="exam_id" property="examId" jdbcType="INTEGER" />
     <result column="student_id" property="studentId" jdbcType="BIGINT" />
-    <result column="score" property="score" jdbcType="VARCHAR" />
+    <result column="score" property="score" jdbcType="INTEGER" />
     <result column="teacher_comment" property="teacherComment" jdbcType="VARCHAR" />
     <result column="parent_comment_state" property="parentCommentState" jdbcType="INTEGER" />
     <result column="parent_comment" property="parentComment" jdbcType="VARCHAR" />
@@ -112,7 +112,7 @@
       parent_comment, entry_teacher_id, entry_time, 
       modify_teacher_id, modify_time)
     values (#{id,jdbcType=BIGINT}, #{examId,jdbcType=INTEGER}, #{studentId,jdbcType=BIGINT}, 
-      #{score,jdbcType=VARCHAR}, #{teacherComment,jdbcType=VARCHAR}, #{parentCommentState,jdbcType=INTEGER}, 
+      #{score,jdbcType=INTEGER}, #{teacherComment,jdbcType=VARCHAR}, #{parentCommentState,jdbcType=INTEGER}, 
       #{parentComment,jdbcType=VARCHAR}, #{entryTeacherId,jdbcType=BIGINT}, #{entryTime,jdbcType=VARCHAR}, 
       #{modifyTeacherId,jdbcType=BIGINT}, #{modifyTime,jdbcType=VARCHAR})
   </insert>
@@ -164,7 +164,7 @@
         #{studentId,jdbcType=BIGINT},
       </if>
       <if test="score != null" >
-        #{score,jdbcType=VARCHAR},
+        #{score,jdbcType=INTEGER},
       </if>
       <if test="teacherComment != null" >
         #{teacherComment,jdbcType=VARCHAR},
@@ -208,7 +208,7 @@
         student_id = #{record.studentId,jdbcType=BIGINT},
       </if>
       <if test="record.score != null" >
-        score = #{record.score,jdbcType=VARCHAR},
+        score = #{record.score,jdbcType=INTEGER},
       </if>
       <if test="record.teacherComment != null" >
         teacher_comment = #{record.teacherComment,jdbcType=VARCHAR},
@@ -241,7 +241,7 @@
     set id = #{record.id,jdbcType=BIGINT},
       exam_id = #{record.examId,jdbcType=INTEGER},
       student_id = #{record.studentId,jdbcType=BIGINT},
-      score = #{record.score,jdbcType=VARCHAR},
+      score = #{record.score,jdbcType=INTEGER},
       teacher_comment = #{record.teacherComment,jdbcType=VARCHAR},
       parent_comment_state = #{record.parentCommentState,jdbcType=INTEGER},
       parent_comment = #{record.parentComment,jdbcType=VARCHAR},
@@ -263,7 +263,7 @@
         student_id = #{studentId,jdbcType=BIGINT},
       </if>
       <if test="score != null" >
-        score = #{score,jdbcType=VARCHAR},
+        score = #{score,jdbcType=INTEGER},
       </if>
       <if test="teacherComment != null" >
         teacher_comment = #{teacherComment,jdbcType=VARCHAR},
@@ -293,7 +293,7 @@
     update q_score
     set exam_id = #{examId,jdbcType=INTEGER},
       student_id = #{studentId,jdbcType=BIGINT},
-      score = #{score,jdbcType=VARCHAR},
+      score = #{score,jdbcType=INTEGER},
       teacher_comment = #{teacherComment,jdbcType=VARCHAR},
       parent_comment_state = #{parentCommentState,jdbcType=INTEGER},
       parent_comment = #{parentComment,jdbcType=VARCHAR},

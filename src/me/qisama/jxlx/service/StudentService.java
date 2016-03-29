@@ -39,6 +39,10 @@ public class StudentService {
 		return studentDaoImpl.update(student);
 	}
 	
+	public int updateSelective(Student student) {
+		return studentDaoImpl.updateSelective(student);
+	}
+	
 	public Student selectById(Long id){
 		return studentDaoImpl.selectById(id);
 	}
@@ -51,5 +55,10 @@ public class StudentService {
 			students.addAll(sList);
 		}
 		return students;
+	}
+	
+	public int restoreDefaultPwd(Student student) {
+		PasswordHelper.encryptPasswordS(student);
+		return studentDaoImpl.updateSelective(student);
 	}
 }

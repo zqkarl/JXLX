@@ -113,11 +113,14 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
+                	<li class="active">
+                        <a href="${pageContext.request.contextPath}/event/student"><i class="fa fa-fw fa-file"></i> 活动通知</a>
+                    </li>
                     <li class="active">
                         <a href="${pageContext.request.contextPath}/event/student"><i class="fa fa-fw fa-file"></i> 活动通知</a>
                     </li>
                     <li>
-                        <a href="${pageContext.request.contextPath}/score"><i class="fa fa-fw fa-info"></i> 排名分析</a>
+                        <a href="${pageContext.request.contextPath}/score/student"><i class="fa fa-fw fa-info"></i> 排名分析</a>
                     </li>
                     <li>
                         <a href="${pageContext.request.contextPath}/mail"><i class="fa fa-fw fa-envelope"></i> 站内信</a>

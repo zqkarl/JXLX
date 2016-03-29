@@ -7,7 +7,7 @@ public class Score {
 
     private Long studentId;
 
-    private String score;
+    private Integer score;
 
     private String teacherComment;
 
@@ -47,12 +47,12 @@ public class Score {
         this.studentId = studentId;
     }
 
-    public String getScore() {
+    public Integer getScore() {
         return score;
     }
 
-    public void setScore(String score) {
-        this.score = score == null ? null : score.trim();
+    public void setScore(Integer score) {
+        this.score = score;
     }
 
     public String getTeacherComment() {
