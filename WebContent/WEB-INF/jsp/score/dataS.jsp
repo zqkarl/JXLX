@@ -14,7 +14,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>创建成绩</title>
+    <title>排名分析</title>
 
    <!-- Bootstrap Core CSS -->
     <link href="${pageContext.request.contextPath}/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -214,7 +214,7 @@
                             </div>
                             <a href="#">
                                 <div class="panel-footer">
-                                    <span class="pull-left">了解更多</span>
+                                    <span class="pull-left"></span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                     <div class="clearfix"></div>
                                 </div>
@@ -236,7 +236,7 @@
                             </div>
                             <a href="#">
                                 <div class="panel-footer">
-                                    <span class="pull-left">了解更多</span>
+                                    <span class="pull-left"></span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                     <div class="clearfix"></div>
                                 </div>
@@ -258,7 +258,7 @@
                             </div>
                             <a href="#">
                                 <div class="panel-footer">
-                                    <span class="pull-left">了解更多</span>
+                                    <span class="pull-left"></span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                     <div class="clearfix"></div>
                                 </div>
@@ -270,7 +270,7 @@
                     <div class="col-lg-12">
                         <div class="panel panel-green">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> 班级平均分排名分析</h3>
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> 历史排名分析</h3>
                             </div>
                             <div class="panel-body">
                                 <div id="morris-area-chart"></div>

@@ -54,19 +54,25 @@ public class ExamController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String list(Model model){
 		List<Exam> eList = new ArrayList<Exam>();
+		List<Subject> sList = new ArrayList<>();
 		if (SecurityUtils.getSubject().hasRole("班主任")) {
 //			String username = (String) SecurityUtils.getSubject().getPrincipal();
 //			Teacher teacher = teacherService.selectTeacherById(Long.valueOf(username));
 			eList = examService.findAll();
+			sList = subjectService.findAll();
 		} else {
 			String username = (String) SecurityUtils.getSubject().getPrincipal();
 			Teacher teacher = teacherService.selectTeacherById(Long.valueOf(username));
 			eList = examService.selectBySubjectId(teacher.getSubjectId());
+			Subject subject = subjectService.selectById(teacher.getSubjectId());
+			if (subject != null) {
+				sList.add(subject);
+			}
 		}
 		
 		model.addAttribute("examList", eList);
 		model.addAttribute("gradeList", gradeService.findAll());
-		model.addAttribute("subjectList", subjectService.findAll());
+		model.addAttribute("subjectList", sList);
 		return "exam/list";
 	}
 	

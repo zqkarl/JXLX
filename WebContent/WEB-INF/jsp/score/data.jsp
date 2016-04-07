@@ -14,7 +14,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>创建成绩</title>
+    <title>排名分析</title>
 
    <!-- Bootstrap Core CSS -->
     <link href="${pageContext.request.contextPath}/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -246,7 +246,7 @@
                             <div class="panel-body">
                                 <div id="morris-donut-chart"></div>
                                 <div class="text-right">
-                                    <a href="#">查看更多 <i class="fa fa-arrow-circle-right"></i></a>
+                                    <a href="#" onclick="redirect();">查看更多 <i class="fa fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -297,6 +297,11 @@
             var a = '<%=request.getAttribute("examSelected")%>';
             changeExam(a);
         });
+	    
+	    function redirect(){
+	    	var id = $('#examSelector').val();
+	    	window.location.href="/JXLX/exam/"+id+"/detail";
+	    }
 	</script>
    	
    	<!-- Morris Charts JavaScript -->

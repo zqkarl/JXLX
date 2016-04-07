@@ -28,8 +28,12 @@
 					<input type="checkbox" name="rememberMe" id="loginkeeping" value="true" /> 
 					<label for="loginkeeping">记住我</label>
 				</p>
-				<p class="login button"> 
-					<input type="submit" value="登录" /> 
+				<p class="login button">
+					<label id="login-info" style="margin-right:100px;color:red;">
+					<c:if test="${not empty param.kickout}">您被踢出登录。</c:if>
+					${error}
+					</label>  
+					<input type="submit" value="登录" />
 				</p>
 				<p class="change_link">
 					<a href="">忘记你的密码了 ?</a>

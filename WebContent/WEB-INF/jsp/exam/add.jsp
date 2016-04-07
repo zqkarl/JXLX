@@ -240,8 +240,8 @@
                     </div>
                 </div>
                 <!-- /.row -->
-                <a href="${pageContext.request.contextPath}/exam/add">
-				<button type="button" class="btn btn-primary" style="float:right;width:7%;margin-right:3%;margin-top:15px;">返 回</button>
+                <a href="${pageContext.request.contextPath}/exam/">
+				<button type="button" class="btn btn-primary" id="returnBtn" style="float:right;width:7%;margin-right:3%;margin-top:15px;">返 回</button>
 				</a>
 				
 				
@@ -273,6 +273,7 @@
 	    $('#addButton').click(function(){
 	    	$('#addForm').submit();
 	    });
+	    
 	</script>
    
 </body>

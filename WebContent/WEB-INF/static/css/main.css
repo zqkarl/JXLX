@@ -35,10 +35,15 @@
 	font-size:17px;
 	margin-top:8px;
 }
+/*成绩模块*/
 .exam{
 	padding: 8px 15px;
     margin-bottom: 20px;
     list-style: none;
     background-color: #f5f5f5;
     border-radius: 4px;
+}
+/*登录模块*/
+.login-info{
+	color:red;!important
 }

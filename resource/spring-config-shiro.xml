@@ -92,8 +92,8 @@
         <property name="realms">
         	<list>  
             <ref bean="userRealm" />  
-            <ref bean="studentRealm" />  
-        </list>
+            <ref bean="studentRealm" />
+        	</list>
         </property>
         <property name="sessionManager" ref="sessionManager"/>
         <property name="cacheManager" ref="cacheManager"/>

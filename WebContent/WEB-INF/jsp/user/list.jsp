@@ -189,7 +189,7 @@
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> ${currentUser.teacherName }<b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> ${currentUser.teacherName } ${currentStudent.studentName }<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="#"><i class="fa fa-fw fa-gear"></i> 密码重置</a>
@@ -267,7 +267,7 @@
 
                     <shiro:hasPermission name="score:create">
                     <li>
-                        <a href="${pageContext.request.contextPath}/score/add"><i class="fa fa-fw fa-pencil"></i> 成绩录入</a>
+                        <a href="${pageContext.request.contextPath}/exam"><i class="fa fa-fw fa-pencil"></i> 成绩录入</a>
                     </li>
                     </shiro:hasPermission>
 
