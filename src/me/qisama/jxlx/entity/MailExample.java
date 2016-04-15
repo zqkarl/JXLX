@@ -1,7 +1,6 @@
 package me.qisama.jxlx.entity;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class MailExample {
@@ -175,62 +174,52 @@ public class MailExample {
             return (Criteria) this;
         }
 
-        public Criteria andSourceEqualTo(String value) {
+        public Criteria andSourceEqualTo(Integer value) {
             addCriterion("source =", value, "source");
             return (Criteria) this;
         }
 
-        public Criteria andSourceNotEqualTo(String value) {
+        public Criteria andSourceNotEqualTo(Integer value) {
             addCriterion("source <>", value, "source");
             return (Criteria) this;
         }
 
-        public Criteria andSourceGreaterThan(String value) {
+        public Criteria andSourceGreaterThan(Integer value) {
             addCriterion("source >", value, "source");
             return (Criteria) this;
         }
 
-        public Criteria andSourceGreaterThanOrEqualTo(String value) {
+        public Criteria andSourceGreaterThanOrEqualTo(Integer value) {
             addCriterion("source >=", value, "source");
             return (Criteria) this;
         }
 
-        public Criteria andSourceLessThan(String value) {
+        public Criteria andSourceLessThan(Integer value) {
             addCriterion("source <", value, "source");
             return (Criteria) this;
         }
 
-        public Criteria andSourceLessThanOrEqualTo(String value) {
+        public Criteria andSourceLessThanOrEqualTo(Integer value) {
             addCriterion("source <=", value, "source");
             return (Criteria) this;
         }
 
-        public Criteria andSourceLike(String value) {
-            addCriterion("source like", value, "source");
-            return (Criteria) this;
-        }
-
-        public Criteria andSourceNotLike(String value) {
-            addCriterion("source not like", value, "source");
-            return (Criteria) this;
-        }
-
-        public Criteria andSourceIn(List<String> values) {
+        public Criteria andSourceIn(List<Integer> values) {
             addCriterion("source in", values, "source");
             return (Criteria) this;
         }
 
-        public Criteria andSourceNotIn(List<String> values) {
+        public Criteria andSourceNotIn(List<Integer> values) {
             addCriterion("source not in", values, "source");
             return (Criteria) this;
         }
 
-        public Criteria andSourceBetween(String value1, String value2) {
+        public Criteria andSourceBetween(Integer value1, Integer value2) {
             addCriterion("source between", value1, value2, "source");
             return (Criteria) this;
         }
 
-        public Criteria andSourceNotBetween(String value1, String value2) {
+        public Criteria andSourceNotBetween(Integer value1, Integer value2) {
             addCriterion("source not between", value1, value2, "source");
             return (Criteria) this;
         }
@@ -245,62 +234,52 @@ public class MailExample {
             return (Criteria) this;
         }
 
-        public Criteria andFromIdEqualTo(String value) {
+        public Criteria andFromIdEqualTo(Long value) {
             addCriterion("from_id =", value, "fromId");
             return (Criteria) this;
         }
 
-        public Criteria andFromIdNotEqualTo(String value) {
+        public Criteria andFromIdNotEqualTo(Long value) {
             addCriterion("from_id <>", value, "fromId");
             return (Criteria) this;
         }
 
-        public Criteria andFromIdGreaterThan(String value) {
+        public Criteria andFromIdGreaterThan(Long value) {
             addCriterion("from_id >", value, "fromId");
             return (Criteria) this;
         }
 
-        public Criteria andFromIdGreaterThanOrEqualTo(String value) {
+        public Criteria andFromIdGreaterThanOrEqualTo(Long value) {
             addCriterion("from_id >=", value, "fromId");
             return (Criteria) this;
         }
 
-        public Criteria andFromIdLessThan(String value) {
+        public Criteria andFromIdLessThan(Long value) {
             addCriterion("from_id <", value, "fromId");
             return (Criteria) this;
         }
 
-        public Criteria andFromIdLessThanOrEqualTo(String value) {
+        public Criteria andFromIdLessThanOrEqualTo(Long value) {
             addCriterion("from_id <=", value, "fromId");
             return (Criteria) this;
         }
 
-        public Criteria andFromIdLike(String value) {
-            addCriterion("from_id like", value, "fromId");
-            return (Criteria) this;
-        }
-
-        public Criteria andFromIdNotLike(String value) {
-            addCriterion("from_id not like", value, "fromId");
-            return (Criteria) this;
-        }
-
-        public Criteria andFromIdIn(List<String> values) {
+        public Criteria andFromIdIn(List<Long> values) {
             addCriterion("from_id in", values, "fromId");
             return (Criteria) this;
         }
 
-        public Criteria andFromIdNotIn(List<String> values) {
+        public Criteria andFromIdNotIn(List<Long> values) {
             addCriterion("from_id not in", values, "fromId");
             return (Criteria) this;
         }
 
-        public Criteria andFromIdBetween(String value1, String value2) {
+        public Criteria andFromIdBetween(Long value1, Long value2) {
             addCriterion("from_id between", value1, value2, "fromId");
             return (Criteria) this;
         }
 
-        public Criteria andFromIdNotBetween(String value1, String value2) {
+        public Criteria andFromIdNotBetween(Long value1, Long value2) {
             addCriterion("from_id not between", value1, value2, "fromId");
             return (Criteria) this;
         }
@@ -315,62 +294,52 @@ public class MailExample {
             return (Criteria) this;
         }
 
-        public Criteria andToIdEqualTo(String value) {
+        public Criteria andToIdEqualTo(Long value) {
             addCriterion("to_id =", value, "toId");
             return (Criteria) this;
         }
 
-        public Criteria andToIdNotEqualTo(String value) {
+        public Criteria andToIdNotEqualTo(Long value) {
             addCriterion("to_id <>", value, "toId");
             return (Criteria) this;
         }
 
-        public Criteria andToIdGreaterThan(String value) {
+        public Criteria andToIdGreaterThan(Long value) {
             addCriterion("to_id >", value, "toId");
             return (Criteria) this;
         }
 
-        public Criteria andToIdGreaterThanOrEqualTo(String value) {
+        public Criteria andToIdGreaterThanOrEqualTo(Long value) {
             addCriterion("to_id >=", value, "toId");
             return (Criteria) this;
         }
 
-        public Criteria andToIdLessThan(String value) {
+        public Criteria andToIdLessThan(Long value) {
             addCriterion("to_id <", value, "toId");
             return (Criteria) this;
         }
 
-        public Criteria andToIdLessThanOrEqualTo(String value) {
+        public Criteria andToIdLessThanOrEqualTo(Long value) {
             addCriterion("to_id <=", value, "toId");
             return (Criteria) this;
         }
 
-        public Criteria andToIdLike(String value) {
-            addCriterion("to_id like", value, "toId");
-            return (Criteria) this;
-        }
-
-        public Criteria andToIdNotLike(String value) {
-            addCriterion("to_id not like", value, "toId");
-            return (Criteria) this;
-        }
-
-        public Criteria andToIdIn(List<String> values) {
+        public Criteria andToIdIn(List<Long> values) {
             addCriterion("to_id in", values, "toId");
             return (Criteria) this;
         }
 
-        public Criteria andToIdNotIn(List<String> values) {
+        public Criteria andToIdNotIn(List<Long> values) {
             addCriterion("to_id not in", values, "toId");
             return (Criteria) this;
         }
 
-        public Criteria andToIdBetween(String value1, String value2) {
+        public Criteria andToIdBetween(Long value1, Long value2) {
             addCriterion("to_id between", value1, value2, "toId");
             return (Criteria) this;
         }
 
-        public Criteria andToIdNotBetween(String value1, String value2) {
+        public Criteria andToIdNotBetween(Long value1, Long value2) {
             addCriterion("to_id not between", value1, value2, "toId");
             return (Criteria) this;
         }
@@ -525,52 +494,62 @@ public class MailExample {
             return (Criteria) this;
         }
 
-        public Criteria andTimeEqualTo(Date value) {
+        public Criteria andTimeEqualTo(String value) {
             addCriterion("time =", value, "time");
             return (Criteria) this;
         }
 
-        public Criteria andTimeNotEqualTo(Date value) {
+        public Criteria andTimeNotEqualTo(String value) {
             addCriterion("time <>", value, "time");
             return (Criteria) this;
         }
 
-        public Criteria andTimeGreaterThan(Date value) {
+        public Criteria andTimeGreaterThan(String value) {
             addCriterion("time >", value, "time");
             return (Criteria) this;
         }
 
-        public Criteria andTimeGreaterThanOrEqualTo(Date value) {
+        public Criteria andTimeGreaterThanOrEqualTo(String value) {
             addCriterion("time >=", value, "time");
             return (Criteria) this;
         }
 
-        public Criteria andTimeLessThan(Date value) {
+        public Criteria andTimeLessThan(String value) {
             addCriterion("time <", value, "time");
             return (Criteria) this;
         }
 
-        public Criteria andTimeLessThanOrEqualTo(Date value) {
+        public Criteria andTimeLessThanOrEqualTo(String value) {
             addCriterion("time <=", value, "time");
             return (Criteria) this;
         }
 
-        public Criteria andTimeIn(List<Date> values) {
+        public Criteria andTimeLike(String value) {
+            addCriterion("time like", value, "time");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimeNotLike(String value) {
+            addCriterion("time not like", value, "time");
+            return (Criteria) this;
+        }
+
+        public Criteria andTimeIn(List<String> values) {
             addCriterion("time in", values, "time");
             return (Criteria) this;
         }
 
-        public Criteria andTimeNotIn(List<Date> values) {
+        public Criteria andTimeNotIn(List<String> values) {
             addCriterion("time not in", values, "time");
             return (Criteria) this;
         }
 
-        public Criteria andTimeBetween(Date value1, Date value2) {
+        public Criteria andTimeBetween(String value1, String value2) {
             addCriterion("time between", value1, value2, "time");
             return (Criteria) this;
         }
 
-        public Criteria andTimeNotBetween(Date value1, Date value2) {
+        public Criteria andTimeNotBetween(String value1, String value2) {
             addCriterion("time not between", value1, value2, "time");
             return (Criteria) this;
         }
@@ -585,52 +564,52 @@ public class MailExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsreadEqualTo(Integer value) {
+        public Criteria andIsreadEqualTo(Boolean value) {
             addCriterion("isread =", value, "isread");
             return (Criteria) this;
         }
 
-        public Criteria andIsreadNotEqualTo(Integer value) {
+        public Criteria andIsreadNotEqualTo(Boolean value) {
             addCriterion("isread <>", value, "isread");
             return (Criteria) this;
         }
 
-        public Criteria andIsreadGreaterThan(Integer value) {
+        public Criteria andIsreadGreaterThan(Boolean value) {
             addCriterion("isread >", value, "isread");
             return (Criteria) this;
         }
 
-        public Criteria andIsreadGreaterThanOrEqualTo(Integer value) {
+        public Criteria andIsreadGreaterThanOrEqualTo(Boolean value) {
             addCriterion("isread >=", value, "isread");
             return (Criteria) this;
         }
 
-        public Criteria andIsreadLessThan(Integer value) {
+        public Criteria andIsreadLessThan(Boolean value) {
             addCriterion("isread <", value, "isread");
             return (Criteria) this;
         }
 
-        public Criteria andIsreadLessThanOrEqualTo(Integer value) {
+        public Criteria andIsreadLessThanOrEqualTo(Boolean value) {
             addCriterion("isread <=", value, "isread");
             return (Criteria) this;
         }
 
-        public Criteria andIsreadIn(List<Integer> values) {
+        public Criteria andIsreadIn(List<Boolean> values) {
             addCriterion("isread in", values, "isread");
             return (Criteria) this;
         }
 
-        public Criteria andIsreadNotIn(List<Integer> values) {
+        public Criteria andIsreadNotIn(List<Boolean> values) {
             addCriterion("isread not in", values, "isread");
             return (Criteria) this;
         }
 
-        public Criteria andIsreadBetween(Integer value1, Integer value2) {
+        public Criteria andIsreadBetween(Boolean value1, Boolean value2) {
             addCriterion("isread between", value1, value2, "isread");
             return (Criteria) this;
         }
 
-        public Criteria andIsreadNotBetween(Integer value1, Integer value2) {
+        public Criteria andIsreadNotBetween(Boolean value1, Boolean value2) {
             addCriterion("isread not between", value1, value2, "isread");
             return (Criteria) this;
         }

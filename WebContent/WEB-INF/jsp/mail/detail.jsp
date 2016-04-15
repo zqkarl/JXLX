@@ -1,7 +1,9 @@
-<!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@taglib prefix="fn" uri="/WEB-INF/tld/functions.tld" %>
 <html lang="en">
 
 <head>
@@ -12,19 +14,19 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>家校联系系统教师版</title>
+    <title>查看站内信</title>
 
-    <!-- Bootstrap Core CSS -->
+   <!-- Bootstrap Core CSS -->
     <link href="${pageContext.request.contextPath}/static/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="${pageContext.request.contextPath}/static/css/sb-admin.css" rel="stylesheet">
 
-    <!-- Morris Charts CSS -->
-    <link href="${pageContext.request.contextPath}/static/css/plugins/morris.css" rel="stylesheet">
-
     <!-- Custom Fonts -->
     <link href="${pageContext.request.contextPath}/static/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- main CSS -->
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/main.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -32,8 +34,14 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
-    <!-- artTemplate -->
+
+    <!-- jQuery -->
+    <script src="${pageContext.request.contextPath}/static/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="${pageContext.request.contextPath}/static/js/bootstrap.min.js"></script>
+
+	<!-- artTemplate -->
     <script src="${pageContext.request.contextPath}/static/js/template.js"></script>
 	
 	<script id="messege" type="text/html">
@@ -87,7 +95,14 @@
             });
         });
     </script>
-
+    
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#submits").click(function(){
+                $("#event-form").submit();
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -95,7 +110,7 @@
     <div id="wrapper">
 
         <!-- Navigation -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+       <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -111,7 +126,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i>&nbsp;&nbsp;<span class="badge" style="background-color:red"></span><b class="caret"></b></a>
                     <ul class="dropdown-menu message-dropdown" id="msg">
-                        
+                       
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -130,7 +145,8 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <li class="active">
+                <shiro:lacksRole name="家长">
+                    <li >
                         <a href="javascript:;" data-toggle="collapse" data-target="#authority"><i class="fa fa-fw fa-wrench"></i>
                         权限管理<i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="authority" class="collapse">
@@ -165,6 +181,13 @@
                             </shiro:hasPermission>
                         </ul> 
                     </li>
+                </shiro:lacksRole>
+                	<shiro:hasRole name="家长">
+                	<li >
+                        <a href="${pageContext.request.contextPath}/user"><i class="fa fa-fw fa-archive"></i> 教师信息</a>
+                    </li>
+                	</shiro:hasRole>
+                
                     <shiro:hasPermission name="event:create">
                     <li>
                         <a href="${pageContext.request.contextPath}/event/add"><i class="fa fa-fw fa-upload"></i> 上传活动</a>
@@ -173,7 +196,13 @@
 
                     <shiro:hasPermission name="event:view">
                     <li>
+                    	<shiro:lacksRole name="家长">
                         <a href="${pageContext.request.contextPath}/event"><i class="fa fa-fw fa-file"></i> 通知查看</a>
+                        </shiro:lacksRole>
+                        
+                        <shiro:hasRole name="家长">
+                        <a href="${pageContext.request.contextPath}/event/student"><i class="fa fa-fw fa-file"></i> 通知查看</a>
+                        </shiro:hasRole>
                     </li>
                     </shiro:hasPermission>
 
@@ -185,10 +214,15 @@
 
                     <shiro:hasPermission name="score:view">
                     <li>
+                    	<shiro:lacksRole name="家长">
                         <a href="${pageContext.request.contextPath}/score/teacher"><i class="fa fa-fw fa-info"></i> 排名分析</a>
+                        </shiro:lacksRole>
+                        <shiro:hasRole name="家长">
+                        <a href="${pageContext.request.contextPath}/score/student"><i class="fa fa-fw fa-info"></i> 排名分析</a>
+                        </shiro:hasRole>
                     </li>
                     </shiro:hasPermission>
-                    <li>
+                    <li class="active">
                         <a href="${pageContext.request.contextPath}/mail"><i class="fa fa-fw fa-envelope"></i> 站内信</a>
                     </li>
                 </ul>
@@ -196,7 +230,7 @@
             <!-- /.navbar-collapse -->
         </nav>
 
-        <div id="page-wrapper" >
+        <div id="page-wrapper">
 
             <div class="container-fluid">
 
@@ -204,34 +238,53 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            欢迎${currentUser.teacherName }，祝工作愉快
+                            站内信
                         </h1>
+                        <ol class="breadcrumb">
+                            <li>
+                                <i class="fa fa-wrench"></i>  <a href="${pageContext.request.contextPath}/mail">站内信</a>
+                            </li>
+                            <li class="active">
+                                <i class="fa fa-table"></i> 查看站内信
+                            </li>
+                        </ol>
                     </div>
                 </div>
                 <!-- /.row -->
 
+                <div class="row ">
+                    <div class="col-lg-12 event eventinfo-title"><p>${mail.title}</p></div>
+                </div>
+                <!-- /.row -->
                 
+                <div class="row ">
+                    <div class="col-lg-12 event"><p>收件人：${fn:teacherName(mail.fromId)}${fn:studentName(mail.fromId)}</p></div>
+                </div>
+                <!-- /.row -->
+                
+                <div class="row ">
+                    <div class="col-lg-12 event"><p>发件人：${fn:studentName(event.toId)}${fn:teacherName(mail.toId)}</p></div>
+                </div>
+                <!-- /.row -->
+                
+                <div class="row ">
+                    <div class="col-lg-12 event"><p>时 间：${mail.time}</p></div>
+                </div>
+                <!-- /.row -->
 
+                <div class="row ">
+                    <div class="col-lg-12 event eventinfo-content"><p>${mail.content}</p></div>
+                </div>
+				
             </div>
             <!-- /.container-fluid -->
-
         </div>
         <!-- /#page-wrapper -->
 
     </div>
     <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <script src="${pageContext.request.contextPath}/static/js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="${pageContext.request.contextPath}/static/js/bootstrap.min.js"></script>
-
-    <!-- Morris Charts JavaScript -->
-    <script src="${pageContext.request.contextPath}/static/js/plugins/morris/raphael.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/js/plugins/morris/morris.min.js"></script>
-    <script src="j${pageContext.request.contextPath}/static/s/plugins/morris/morris-data.js"></script>
-
+   
 </body>
 
 </html>

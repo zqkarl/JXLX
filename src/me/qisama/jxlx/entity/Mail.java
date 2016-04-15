@@ -1,23 +1,21 @@
 package me.qisama.jxlx.entity;
 
-import java.util.Date;
-
 public class Mail {
     private Integer id;
 
-    private String source;
+    private Integer source;
 
-    private String fromId;
+    private Long fromId;
 
-    private String toId;
+    private Long toId;
 
     private String title;
 
     private String content;
 
-    private Date time;
+    private String time;
 
-    private Integer isread;
+    private Boolean isread;
 
     private Integer replyId;
 
@@ -29,28 +27,28 @@ public class Mail {
         this.id = id;
     }
 
-    public String getSource() {
+    public Integer getSource() {
         return source;
     }
 
-    public void setSource(String source) {
-        this.source = source == null ? null : source.trim();
+    public void setSource(Integer source) {
+        this.source = source;
     }
 
-    public String getFromId() {
+    public Long getFromId() {
         return fromId;
     }
 
-    public void setFromId(String fromId) {
-        this.fromId = fromId == null ? null : fromId.trim();
+    public void setFromId(Long fromId) {
+        this.fromId = fromId;
     }
 
-    public String getToId() {
+    public Long getToId() {
         return toId;
     }
 
-    public void setToId(String toId) {
-        this.toId = toId == null ? null : toId.trim();
+    public void setToId(Long toId) {
+        this.toId = toId;
     }
 
     public String getTitle() {
@@ -69,19 +67,19 @@ public class Mail {
         this.content = content == null ? null : content.trim();
     }
 
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setTime(String time) {
+        this.time = time == null ? null : time.trim();
     }
 
-    public Integer getIsread() {
+    public Boolean getIsread() {
         return isread;
     }
 
-    public void setIsread(Integer isread) {
+    public void setIsread(Boolean isread) {
         this.isread = isread;
     }
 

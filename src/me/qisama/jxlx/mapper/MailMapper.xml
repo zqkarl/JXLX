@@ -3,13 +3,13 @@
 <mapper namespace="me.qisama.jxlx.dao.MailMapper" >
   <resultMap id="BaseResultMap" type="me.qisama.jxlx.entity.Mail" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="source" property="source" jdbcType="VARCHAR" />
-    <result column="from_id" property="fromId" jdbcType="VARCHAR" />
-    <result column="to_id" property="toId" jdbcType="VARCHAR" />
+    <result column="source" property="source" jdbcType="INTEGER" />
+    <result column="from_id" property="fromId" jdbcType="BIGINT" />
+    <result column="to_id" property="toId" jdbcType="BIGINT" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="content" property="content" jdbcType="VARCHAR" />
-    <result column="time" property="time" jdbcType="TIMESTAMP" />
-    <result column="isread" property="isread" jdbcType="INTEGER" />
+    <result column="time" property="time" jdbcType="VARCHAR" />
+    <result column="isread" property="isread" jdbcType="BIT" />
     <result column="reply_id" property="replyId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -106,12 +106,10 @@
   <insert id="insert" parameterType="me.qisama.jxlx.entity.Mail" >
     insert into q_mail (id, source, from_id, 
       to_id, title, content, 
-      time, isread, reply_id
-      )
-    values (#{id,jdbcType=INTEGER}, #{source,jdbcType=VARCHAR}, #{fromId,jdbcType=VARCHAR}, 
-      #{toId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
-      #{time,jdbcType=TIMESTAMP}, #{isread,jdbcType=INTEGER}, #{replyId,jdbcType=INTEGER}
-      )
+      time, isread, reply_id)
+    values (#{id,jdbcType=INTEGER}, #{source,jdbcType=INTEGER}, #{fromId,jdbcType=BIGINT}, 
+      #{toId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{time,jdbcType=VARCHAR}, #{isread,jdbcType=BIT}, #{replyId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="me.qisama.jxlx.entity.Mail" >
     insert into q_mail
@@ -149,13 +147,13 @@
         #{id,jdbcType=INTEGER},
       </if>
       <if test="source != null" >
-        #{source,jdbcType=VARCHAR},
+        #{source,jdbcType=INTEGER},
       </if>
       <if test="fromId != null" >
-        #{fromId,jdbcType=VARCHAR},
+        #{fromId,jdbcType=BIGINT},
       </if>
       <if test="toId != null" >
-        #{toId,jdbcType=VARCHAR},
+        #{toId,jdbcType=BIGINT},
       </if>
       <if test="title != null" >
         #{title,jdbcType=VARCHAR},
@@ -164,10 +162,10 @@
         #{content,jdbcType=VARCHAR},
       </if>
       <if test="time != null" >
-        #{time,jdbcType=TIMESTAMP},
+        #{time,jdbcType=VARCHAR},
       </if>
       <if test="isread != null" >
-        #{isread,jdbcType=INTEGER},
+        #{isread,jdbcType=BIT},
       </if>
       <if test="replyId != null" >
         #{replyId,jdbcType=INTEGER},
@@ -187,13 +185,13 @@
         id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.source != null" >
-        source = #{record.source,jdbcType=VARCHAR},
+        source = #{record.source,jdbcType=INTEGER},
       </if>
       <if test="record.fromId != null" >
-        from_id = #{record.fromId,jdbcType=VARCHAR},
+        from_id = #{record.fromId,jdbcType=BIGINT},
       </if>
       <if test="record.toId != null" >
-        to_id = #{record.toId,jdbcType=VARCHAR},
+        to_id = #{record.toId,jdbcType=BIGINT},
       </if>
       <if test="record.title != null" >
         title = #{record.title,jdbcType=VARCHAR},
@@ -202,10 +200,10 @@
         content = #{record.content,jdbcType=VARCHAR},
       </if>
       <if test="record.time != null" >
-        time = #{record.time,jdbcType=TIMESTAMP},
+        time = #{record.time,jdbcType=VARCHAR},
       </if>
       <if test="record.isread != null" >
-        isread = #{record.isread,jdbcType=INTEGER},
+        isread = #{record.isread,jdbcType=BIT},
       </if>
       <if test="record.replyId != null" >
         reply_id = #{record.replyId,jdbcType=INTEGER},
@@ -218,13 +216,13 @@
   <update id="updateByExample" parameterType="map" >
     update q_mail
     set id = #{record.id,jdbcType=INTEGER},
-      source = #{record.source,jdbcType=VARCHAR},
-      from_id = #{record.fromId,jdbcType=VARCHAR},
-      to_id = #{record.toId,jdbcType=VARCHAR},
+      source = #{record.source,jdbcType=INTEGER},
+      from_id = #{record.fromId,jdbcType=BIGINT},
+      to_id = #{record.toId,jdbcType=BIGINT},
       title = #{record.title,jdbcType=VARCHAR},
       content = #{record.content,jdbcType=VARCHAR},
-      time = #{record.time,jdbcType=TIMESTAMP},
-      isread = #{record.isread,jdbcType=INTEGER},
+      time = #{record.time,jdbcType=VARCHAR},
+      isread = #{record.isread,jdbcType=BIT},
       reply_id = #{record.replyId,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -234,13 +232,13 @@
     update q_mail
     <set >
       <if test="source != null" >
-        source = #{source,jdbcType=VARCHAR},
+        source = #{source,jdbcType=INTEGER},
       </if>
       <if test="fromId != null" >
-        from_id = #{fromId,jdbcType=VARCHAR},
+        from_id = #{fromId,jdbcType=BIGINT},
       </if>
       <if test="toId != null" >
-        to_id = #{toId,jdbcType=VARCHAR},
+        to_id = #{toId,jdbcType=BIGINT},
       </if>
       <if test="title != null" >
         title = #{title,jdbcType=VARCHAR},
@@ -249,10 +247,10 @@
         content = #{content,jdbcType=VARCHAR},
       </if>
       <if test="time != null" >
-        time = #{time,jdbcType=TIMESTAMP},
+        time = #{time,jdbcType=VARCHAR},
       </if>
       <if test="isread != null" >
-        isread = #{isread,jdbcType=INTEGER},
+        isread = #{isread,jdbcType=BIT},
       </if>
       <if test="replyId != null" >
         reply_id = #{replyId,jdbcType=INTEGER},
@@ -262,13 +260,13 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="me.qisama.jxlx.entity.Mail" >
     update q_mail
-    set source = #{source,jdbcType=VARCHAR},
-      from_id = #{fromId,jdbcType=VARCHAR},
-      to_id = #{toId,jdbcType=VARCHAR},
+    set source = #{source,jdbcType=INTEGER},
+      from_id = #{fromId,jdbcType=BIGINT},
+      to_id = #{toId,jdbcType=BIGINT},
       title = #{title,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
-      time = #{time,jdbcType=TIMESTAMP},
-      isread = #{isread,jdbcType=INTEGER},
+      time = #{time,jdbcType=VARCHAR},
+      isread = #{isread,jdbcType=BIT},
       reply_id = #{replyId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>

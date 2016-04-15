@@ -57,6 +57,11 @@ public class StudentService {
 		return students;
 	}
 	
+	public List<Student> selectByClassId(Integer classId) {
+		List<Student> sList = studentDaoImpl.selectByClassId(classId);
+		return sList;
+	}
+	
 	public int restoreDefaultPwd(Student student) {
 		PasswordHelper.encryptPasswordS(student);
 		return studentDaoImpl.updateSelective(student);

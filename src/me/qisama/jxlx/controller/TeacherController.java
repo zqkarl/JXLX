@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import me.qisama.jxlx.bean.ResponseStatus;
 import me.qisama.jxlx.entity.Teacher;
+import me.qisama.jxlx.service.ClasseService;
 import me.qisama.jxlx.service.RoleService;
 import me.qisama.jxlx.service.SubjectService;
 import me.qisama.jxlx.service.TeacherService;
@@ -33,9 +34,13 @@ public class TeacherController {
 	@Autowired
 	private SubjectService subjectService;
 	
+	@Autowired
+	private ClasseService classeService;
+	
 	@RequiresPermissions("teacher:view")
 	@RequestMapping(method = RequestMethod.GET)
 	public String list(Model model) {
+		model.addAttribute("classList", classeService.findAll());
 		model.addAttribute("userList", teacherService.findAll());
 		model.addAttribute("roleList", roleService.findAll());
 		model.addAttribute("subjectList", subjectService.findAll());
@@ -51,7 +56,9 @@ public class TeacherController {
 	
 	@RequiresPermissions("teacher:action")
 	@RequestMapping(value = "/add" , method = RequestMethod.POST)
-	public String create(@RequestParam(value="subjectId", required=false) Integer subjectId ,Model model,HttpServletRequest request) {
+	public String create(@RequestParam(value="subjectId", required=false) Integer subjectId ,
+			@RequestParam(value="classeId", required=false) Integer[] classes,
+			Model model,HttpServletRequest request) {
 		String id = request.getParameter("id"); // 工号长度必须大于6且为数字，不能超过12位
 		Long idLong = Long.valueOf(id);
 		String teacherName = request.getParameter("teacherName");
@@ -66,7 +73,7 @@ public class TeacherController {
 		teacher.setSubjectId(subjectId);
 		teacher.setPassword(password);
 		
-		teacherService.create(teacher, roleIds);
+		teacherService.create(teacher, roleIds, classes);
 		
 		return "redirect:/user";
 	}
@@ -87,15 +94,19 @@ public class TeacherController {
 	public Object showUpdate(@RequestParam(value="id", defaultValue="0") Long id) {
 		Teacher teacher = teacherService.selectTeacherById(id);
 		List<Long> checkIds = teacherService.getRoleIdByUserId(id);
+		List<Integer> classIds = teacherService.selectClassIdsByTeacher(id);
 		ResponseStatus responseStatus = new ResponseStatus();
 		responseStatus.setData(teacher);
 		responseStatus.setData2(checkIds);
+		responseStatus.setData3(classIds);
 		return responseStatus;
 	}
 	
 	@RequiresPermissions("teacher:action")
 	@RequestMapping(value = "/update" , method = RequestMethod.POST)
-	public String update(@RequestParam("id") Long id ,Model model, HttpServletRequest request) {
+	public String update(@RequestParam("id") Long id ,
+			@RequestParam("classeId") Integer[] classes,
+			Model model, HttpServletRequest request) {
 		String[] roleIds = request.getParameterValues("roleIds");
 		String teacherName = request.getParameter("teacherName");
 		String password = request.getParameter("password");
@@ -111,7 +122,7 @@ public class TeacherController {
 			teacherService.changePwd(teacher);
 		}
 		
-		teacherService.update(teacher, roleIds);
+		teacherService.update(teacher, roleIds, classes);
 		
 		return "redirect:/user";
 	}

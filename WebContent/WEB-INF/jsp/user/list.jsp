@@ -37,6 +37,61 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="${pageContext.request.contextPath}/static/js/bootstrap.js"></script>
+    
+    <!-- artTemplate -->
+    <script src="${pageContext.request.contextPath}/static/js/template.js"></script>
+	
+	<script id="messege" type="text/html">
+	{{each data as mail}}
+	<li class="message-preview">
+       <a href="${pageContext.request.contextPath}/mail/read/{{mail.id}}">
+          <div class="media">                         
+             <div class="media-body">
+            	<h5 class="media-heading"><strong>{{transname mail.fromId}}</strong>
+                </h5>
+             <p class="small text-muted"><i class="fa fa-clock-o"></i>{{mail.time}}</p>
+  			<p>{{mail.title}}</p>
+    		</div>
+     	</div>
+       </a>
+    </li>
+	{{/each}}
+	<li class="message-footer">
+         <a href="${pageContext.request.contextPath}/mail"> 查看更多未读消息</a>
+    </li>
+	</script>
+	
+	<script type="text/javascript">
+        $(document).ready(function(){
+        	$.get("/JXLX/mail/top3",function(result){ 
+            	template.helper("transname",function(nameid){
+            		var aaa = "222";
+                	$.ajax({
+                		type : 'POST',
+                		url : '/JXLX/mail/name',
+                		data: {id:nameid},
+                		async: false,
+                		success: function(result){  
+                  			aaa = result.data;
+                  			
+                 		}
+                	});
+                	return aaa;
+                	
+                });
+ 				var html = template("messege",result);
+  				$('#msg').html(html);
+ 			  });
+        	
+        	$.get("/JXLX/mail/count",function(result){
+            	var num = result.data;
+            	
+            	if(num != null && num>0) {
+            		$('.badge').text(num);
+            	}
+            });
+        });
+    </script>
 
     <script type="text/javascript">
         $(document).ready(function(){
@@ -82,6 +137,7 @@
 
         function showUpdate (id) {
         	$("input[id='roleIdsU']").prop('checked',false);
+        	$("input[id='classIdsU']").prop('checked',false);
             // body...
             $.ajax({
                     type: 'post',
@@ -91,6 +147,7 @@
                     success : function(d){
                         if(1 == d.status){
                         	var checkids = d.data2;
+                        	var classids = d.data3;
                         	
                             $('#idU').val(id);
                             $('#teacherNameU').val(d.data.teacherName);
@@ -98,6 +155,12 @@
                             
                             $.each( $("input[id='roleIdsU']"), function(i, n){
 							    if(checkids.toString().indexOf($(this).val())>=0){
+							    $(this).prop("checked","checked");
+							    }
+						    });
+                            
+                            $.each( $("input[id='classIdsU']"), function(i, n){
+							    if(classids.toString().indexOf($(this).val())>=0){
 							    $(this).prop("checked","checked");
 							    }
 						    });
@@ -144,48 +207,9 @@
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i>&nbsp;&nbsp;<span class="badge" style="background-color:red">3</span><b class="caret"></b></a>
-                    <ul class="dropdown-menu message-dropdown">
-                        <li class="message-preview">
-                            <a href="#">
-                                <div class="media">
-                                    
-                                    <div class="media-body">
-                                        <h5 class="media-heading"><strong>小明的家长</strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> 2016-3-12 12:29:10</p>
-                                        <p>关于小明的请假</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="message-preview">
-                            <a href="#">
-                                <div class="media">
-                                   <div class="media-body">
-                                        <h5 class="media-heading"><strong>小明的家长</strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> 2016-3-12 12:29:10</p>
-                                        <p>关于小明的请假</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="message-preview">
-                            <a href="#">
-                                <div class="media">
-                                    <div class="media-body">
-                                        <h5 class="media-heading"><strong>小明的家长</strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> 2016-3-12 12:29:10</p>
-                                        <p>关于小明的请假</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="message-footer">
-                            <a href="#"> 查看更多未读消息</a>
-                        </li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i>&nbsp;&nbsp;<span class="badge" style="background-color:red"></span><b class="caret"></b></a>
+                    <ul class="dropdown-menu message-dropdown" id="msg">
+                        
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -404,6 +428,15 @@
                     <div class="modal-row-right" id="class-info"></div>
                 </div>
                 <div class="modal-row">
+                    <div class="modal-row-left">任教班级：</div>
+                    <div class="modal-row-middle" style="width:73%">
+                        <c:forEach items="${classList}" var="c">
+							<input type="checkbox" name="classeId" id="classIds" value="${c.id }"
+							>${c.className }
+						</c:forEach>
+                    </div>
+                </div>
+                <div class="modal-row">
                     <div class="modal-row-left">角色：</div>
                     <div class="modal-row-middle" style="width:73%">
                         <c:forEach items="${roleList}" var="r">
@@ -466,6 +499,15 @@
                             </select>
                         </div>
                     <div class="modal-row-right" id="class-info"></div>
+                </div>
+                <div class="modal-row">
+                    <div class="modal-row-left">任教班级：</div>
+                    <div class="modal-row-middle" style="width:73%">
+                        <c:forEach items="${classList}" var="c">
+							<input type="checkbox" name="classeId" id="classIdsU" value="${c.id }"
+							>${c.className }
+						</c:forEach>
+                    </div>
                 </div>
                 <div class="modal-row">
                     <div class="modal-row-left">角色：</div>

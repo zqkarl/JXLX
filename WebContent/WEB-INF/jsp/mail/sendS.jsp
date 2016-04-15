@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@taglib prefix="fn" uri="/WEB-INF/tld/functions.tld" %>
 <html lang="en">
 
 <head>
@@ -36,41 +37,25 @@
 
     <!-- jQuery -->
     <script src="${pageContext.request.contextPath}/static/js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="${pageContext.request.contextPath}/static/js/bootstrap.min.js"></script>
     
     <!-- artTemplate -->
     <script src="${pageContext.request.contextPath}/static/js/template.js"></script>
-	
-	<script id="messege" type="text/html">
-	{{each data as mail}}
-	<li class="message-preview">
-       <a href="${pageContext.request.contextPath}/mail/read/{{mail.id}}">
-          <div class="media">                         
-             <div class="media-body">
-            	<h5 class="media-heading"><strong>{{transname mail.fromId}}</strong>
-                </h5>
-             <p class="small text-muted"><i class="fa fa-clock-o"></i>{{mail.time}}</p>
-  			<p>{{mail.title}}</p>
-    		</div>
-     	</div>
-       </a>
-    </li>
-	{{/each}}
-	<li class="message-footer">
-         <a href="${pageContext.request.contextPath}/mail"> 查看更多未读消息</a>
-    </li>
-	</script>
-	
-	<script type="text/javascript">
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="${pageContext.request.contextPath}/static/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
         $(document).ready(function(){
-        	$.get("/JXLX/mail/top3",function(result){ 
+            $("#submits").click(function(){
+                $("#event-form").submit();
+            });
+            
+            $.get("top3",function(result){ 
             	template.helper("transname",function(nameid){
             		var aaa = "222";
                 	$.ajax({
                 		type : 'POST',
-                		url : '/JXLX/mail/name',
+                		url : 'name',
                 		data: {id:nameid},
                 		async: false,
                 		success: function(result){  
@@ -84,21 +69,13 @@
  				var html = template("messege",result);
   				$('#msg').html(html);
  			  });
-        	
-        	$.get("/JXLX/mail/count",function(result){
+            
+            $.get("/JXLX/mail/count",function(result){
             	var num = result.data;
             	
             	if(num != null && num>0) {
             		$('.badge').text(num);
             	}
-            });
-        });
-    </script>
-    
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $("#submits").click(function(){
-                $("#event-form").submit();
             });
         });
     </script>
@@ -144,65 +121,16 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
            <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <li >
-                        <a href="javascript:;" data-toggle="collapse" data-target="#authority"><i class="fa fa-fw fa-wrench"></i>
-                        权限管理<i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="authority" class="collapse">
-                            <shiro:hasPermission name="teacher:view">
-                            <li>
-                                <a href="${pageContext.request.contextPath}/user"> 教师管理</a>
-                            </li>
-                            </shiro:hasPermission>
-
-                            <shiro:hasPermission name="student:view">
-                            <li>
-                                <a href="${pageContext.request.contextPath}/student"> 学生管理</a>
-                            </li>
-                            </shiro:hasPermission>
-
-                            <shiro:hasPermission name="subject:view">
-                            <li>
-                                <a href="${pageContext.request.contextPath}/subject"> 学科管理</a>
-                            </li>
-                            </shiro:hasPermission>
-
-                            <shiro:hasPermission name="role:view">
-                            <li>
-                                <a href="${pageContext.request.contextPath}/role"> 角色管理</a>
-                            </li>
-                            </shiro:hasPermission>
-
-                            <shiro:hasPermission name="resource:view">
-                            <li>
-                                <a href="${pageContext.request.contextPath}/resource"> 资源管理</a>
-                            </li>
-                            </shiro:hasPermission>
-                        </ul> 
+                	<li>
+                        <a href="${pageContext.request.contextPath}/user"><i class="fa fa-fw fa-archive"></i> 教师信息</a>
                     </li>
-                    <shiro:hasPermission name="event:create">
+                    <li>
+                        <a href="${pageContext.request.contextPath}/event/student"><i class="fa fa-fw fa-file"></i> 活动通知</a>
+                    </li>
+                    <li>
+                        <a href="${pageContext.request.contextPath}/score/student"><i class="fa fa-fw fa-info"></i> 排名分析</a>
+                    </li>
                     <li class="active">
-                        <a href="${pageContext.request.contextPath}/event/add"><i class="fa fa-fw fa-upload"></i> 上传活动</a>
-                    </li>
-                    </shiro:hasPermission>
-
-                    <shiro:hasPermission name="event:view">
-                    <li >
-                        <a href="${pageContext.request.contextPath}/event"><i class="fa fa-fw fa-file"></i> 通知查看</a>
-                    </li>
-                    </shiro:hasPermission>
-
-                    <shiro:hasPermission name="score:create">
-                    <li>
-                        <a href="${pageContext.request.contextPath}/exam"><i class="fa fa-fw fa-pencil"></i> 成绩录入</a>
-                    </li>
-                    </shiro:hasPermission>
-
-                    <shiro:hasPermission name="score:view">
-                    <li>
-                        <a href="${pageContext.request.contextPath}/score/teacher"><i class="fa fa-fw fa-info"></i> 排名分析</a>
-                    </li>
-                    </shiro:hasPermission>
-                    <li>
                         <a href="${pageContext.request.contextPath}/mail"><i class="fa fa-fw fa-envelope"></i> 站内信</a>
                     </li>
                 </ul>
@@ -218,14 +146,14 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            创建活动
+                            发送站内信
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-wrench"></i>  <a href="${pageContext.request.contextPath}/event">活动</a>
+                                <i class="fa fa-wrench"></i>  <a href="${pageContext.request.contextPath}/mail">站内信</a>
                             </li>
                             <li class="active">
-                                <i class="fa fa-table"></i> 创建活动
+                                <i class="fa fa-table"></i> 发送站内信
                             </li>
                         </ol>
                     </div>
@@ -233,43 +161,48 @@
                 <!-- /.row -->
 
                 <div class="row">
-                    
-                    <div class="col-lg-12 event-edit">
-                        <form id="event-form" action="${pageContext.request.contextPath}/event/add" method="post" enctype="multipart/form-data">
+                     <form action="${pageContext.request.contextPath}/mail/send" method="post">
+                    <div class="col-lg-8 event-edit">
+                       
                         	<div class="event-row col-md-12">
-                        		<div class="event-title col-md-2"><span style="color:red">*</span>活动标题：</div>
-                        		<div class="event-input col-md-6"><input type="text" name="title" class="form-control "></div>
-                        		<div class="event-info col-md-4" ></div>
+                        		<div class="col-md-2" style="text-size:18px;"><span style="color:red">*</span>主题：</div>
+                        		<div class="event-input col-md-10"><input type="text" name="title" class="form-control "></div>
+                        		
                         	</div>
 							<div class="event-row col-md-12">
-                        		<div class="event-title col-md-2"><span style="color:red">*</span>活动内容：</div>
-                        		<div class="event-input col-md-6">
+                        		<div class="col-md-2" style="text-size:18px;"><span style="color:red">*</span>内容：</div>
+                        		<div class="event-input col-md-10">
 									<textarea class="form-control" name="content" rows="10"></textarea>
                         		</div>
-                        		<div class="event-info col-md-4" ></div>
                         	</div>
-                        	<div class="event-row col-md-12">
-                        		<div class="event-title col-md-2"><span style="color:red">*</span>通知班级：</div>
-                        		<div class="event-input col-md-6">
-                        			<c:forEach items="${classes}" var="c">
-									<input type="checkbox" name="classes" value="${c.id }"> ${c.className} 
-									</c:forEach>
-								</div>
-                        		<div class="event-info col-md-4" ></div>
-                        	</div>
-                            <div class="event-row col-md-12">
-                                <div class="event-title col-md-2">附件上传：</div>
-                                <div class="event-input col-md-6">
-                                    <input type="file" name="file" accept=".zip,.7z,.rar">
-                                </div>
-                                <div class="event-info col-md-4" ></div>
-                            </div>
                             <div class="col-md-8">
-                            	<button class="btn btn-primary event-submit" id="submits">确认提交</button>
+                            	<button class="btn btn-primary event-submit" id="submits">发送</button>
                             </div> 
                             
-                        </form>
+                       
                     </div>
+                	<div class="col-lg-4">
+                		<div class="panel panel-warning">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">收件人选择</h3>
+                            </div>
+                            <div class="panel-body">
+                            	<div class="form-group col-md-12" >
+					                <label for="titleKey" class="control-label">选择教师</label>
+					                <c:forEach items="${teacherList }" var="teacher">
+					                <li>
+					                <input type="checkbox" id="teacherId" name="toId" value="${teacher.id }"> ${teacher.teacherName }
+					                </li>
+					                </c:forEach>
+					                
+					            </div>
+					            <div class="form-group col-md-12" id="std">
+					            	
+					            </div>
+                            </div>
+                        </div>
+                	</div>
+                 </form>
                 </div>
                 <!-- /.row -->
             </div>
@@ -280,8 +213,56 @@
     </div>
     <!-- /#wrapper -->
 	
+	<script id="studentlist" type="text/html">
 	
-   
+	
+ 	   {{each data as student}}
+			<li><input type="checkbox" name="toId" value={{student.id}}> {{student.studentName}}</li>
+ 	   {{/each}}
+	
+	</script>
+	
+	<script id="messege" type="text/html">
+	{{each data as mail}}
+	<li class="message-preview">
+       <a href="${pageContext.request.contextPath}/mail/read/{{mail.id}}">
+          <div class="media">                         
+             <div class="media-body">
+            	<h5 class="media-heading"><strong>{{transname mail.fromId}}</strong>
+                </h5>
+             <p class="small text-muted"><i class="fa fa-clock-o"></i>{{mail.time}}</p>
+  			<p>{{mail.title}}</p>
+    		</div>
+     	</div>
+       </a>
+    </li>
+	{{/each}}
+	<li class="message-footer">
+         <a href="${pageContext.request.contextPath}/mail"> 查看更多未读消息</a>
+    </li>
+	</script>
+   	<script>
+   		function student(){
+   			var classe = $('#classeId').val();
+   			
+   			$.get("selectStd", { classId: classe },
+   				  function(result){
+   				   
+   					 var html = template("studentlist",result);
+    				$('#std').html(html);
+   				  });
+   		}
+   		
+   		function top3(){
+   			$.get("top3",function(result){
+     				   
+     				var html = template("messege",result);
+      				$('#msg').html(html);
+     				  });
+   		}
+   	</script>
+   	
+   	
 </body>
 
 </html>

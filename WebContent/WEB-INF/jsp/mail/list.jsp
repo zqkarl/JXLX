@@ -1,7 +1,9 @@
-<!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@taglib prefix="fn" uri="/WEB-INF/tld/functions.tld" %>
 <html lang="en">
 
 <head>
@@ -12,19 +14,22 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>家校联系系统教师版</title>
+    <title>站内信</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="${pageContext.request.contextPath}/static/css/bootstrap.min.css" rel="stylesheet">
+   <!-- Bootstrap Core CSS -->
+    <link href="${pageContext.request.contextPath}/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    
+    <!-- Bootstrap DateTimePicker CSS -->
+    <link href="${pageContext.request.contextPath}/static/css/bootstrap-datetimepicker.css" rel="stylesheet" media="screen">
 
     <!-- Custom CSS -->
     <link href="${pageContext.request.contextPath}/static/css/sb-admin.css" rel="stylesheet">
 
-    <!-- Morris Charts CSS -->
-    <link href="${pageContext.request.contextPath}/static/css/plugins/morris.css" rel="stylesheet">
-
     <!-- Custom Fonts -->
     <link href="${pageContext.request.contextPath}/static/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- main CSS -->
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/main.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -32,6 +37,16 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <!-- jQuery -->
+    <script src="${pageContext.request.contextPath}/static/js/jquery-1.8.3.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="${pageContext.request.contextPath}/static/js/bootstrap.js"></script>
+    
+    <!-- Bootstrap DateTimePicker JavaScript-->
+    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
     
     <!-- artTemplate -->
     <script src="${pageContext.request.contextPath}/static/js/template.js"></script>
@@ -87,15 +102,13 @@
             });
         });
     </script>
-
 </head>
 
 <body>
-
     <div id="wrapper">
 
         <!-- Navigation -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+       <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -130,7 +143,8 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <li class="active">
+                <shiro:lacksRole name="家长">
+                    <li >
                         <a href="javascript:;" data-toggle="collapse" data-target="#authority"><i class="fa fa-fw fa-wrench"></i>
                         权限管理<i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="authority" class="collapse">
@@ -165,6 +179,13 @@
                             </shiro:hasPermission>
                         </ul> 
                     </li>
+                </shiro:lacksRole>
+                	<shiro:hasRole name="家长">
+                	<li >
+                        <a href="${pageContext.request.contextPath}/user"><i class="fa fa-fw fa-archive"></i> 教师信息</a>
+                    </li>
+                	</shiro:hasRole>
+                
                     <shiro:hasPermission name="event:create">
                     <li>
                         <a href="${pageContext.request.contextPath}/event/add"><i class="fa fa-fw fa-upload"></i> 上传活动</a>
@@ -173,7 +194,13 @@
 
                     <shiro:hasPermission name="event:view">
                     <li>
+                    	<shiro:lacksRole name="家长">
                         <a href="${pageContext.request.contextPath}/event"><i class="fa fa-fw fa-file"></i> 通知查看</a>
+                        </shiro:lacksRole>
+                        
+                        <shiro:hasRole name="家长">
+                        <a href="${pageContext.request.contextPath}/event/student"><i class="fa fa-fw fa-file"></i> 通知查看</a>
+                        </shiro:hasRole>
                     </li>
                     </shiro:hasPermission>
 
@@ -185,10 +212,15 @@
 
                     <shiro:hasPermission name="score:view">
                     <li>
+                    	<shiro:lacksRole name="家长">
                         <a href="${pageContext.request.contextPath}/score/teacher"><i class="fa fa-fw fa-info"></i> 排名分析</a>
+                        </shiro:lacksRole>
+                        <shiro:hasRole name="家长">
+                        <a href="${pageContext.request.contextPath}/score/student"><i class="fa fa-fw fa-info"></i> 排名分析</a>
+                        </shiro:hasRole>
                     </li>
                     </shiro:hasPermission>
-                    <li>
+                    <li class="active">
                         <a href="${pageContext.request.contextPath}/mail"><i class="fa fa-fw fa-envelope"></i> 站内信</a>
                     </li>
                 </ul>
@@ -196,7 +228,7 @@
             <!-- /.navbar-collapse -->
         </nav>
 
-        <div id="page-wrapper" >
+        <div id="page-wrapper">
 
             <div class="container-fluid">
 
@@ -204,34 +236,101 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            欢迎${currentUser.teacherName }，祝工作愉快
+                            站内信收件箱
                         </h1>
+                        <ol class="breadcrumb">
+                            <li>
+                                <i class="fa fa-wrench"></i>  <a href="${pageContext.request.contextPath}/mail">站内信</a>
+                            </li>
+                            <li class="active">
+                                <i class="fa fa-table"></i> 站内信收件箱
+                            </li>
+                        </ol>
                     </div>
                 </div>
                 <!-- /.row -->
 
-                
-
+                <div class="row">
+                    <div class="col-lg-8 ">
+                        <table class="table">
+							<thead>
+								<tr>
+									<th>发件人</th>
+									<th>标题</th>
+									<th>时间</th>
+									
+								</tr>
+							</thead>
+						<tbody>
+						
+							<c:forEach items="${mailList}" var="m">
+							<tr>
+								<td>
+								${fn:studentName(m.fromId) }${fn:teacherName(m.fromId) }</td>
+								<td><a href="${pageContext.request.contextPath}/mail/read/${m.id}">${m.title }</a></td>
+								<td>${m.time }</td>
+							</tr>
+							</c:forEach>
+						
+						</tbody>
+						</table>
+					<shiro:hasRole name="家长">
+					<a href="${pageContext.request.contextPath}/mail/sendstd">
+					<button type="button" class="btn btn-primary" id="addButton" style="float:right;width:10%；margin-left:3%">写信</button>
+					</a>
+					</shiro:hasRole>
+					<shiro:lacksRole name="家长">
+					<a href="${pageContext.request.contextPath}/mail/send">
+					<button type="button" class="btn btn-primary" id="addButton" style="float:right;width:10%；margin-left:3%">写信</button>
+					</a>
+					</shiro:lacksRole>
+                    </div>
+               		<div class="col-lg-4">
+               			<div class="panel panel-warning">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">条件筛选</h3>
+                            </div>
+                            <div class="panel-body">
+                                <form id="event-search" action="${pageContext.request.contextPath}/mail/search" method="post">
+					            <div class="form-group col-md-12">
+					                <label for="titleKey" class="control-label">内容检索</label>
+					                <input size="16" name="title" id="titleKey" type="text" class="form-control">
+					            </div>
+					            <div class="form-group col-md-12">
+					                <label for="fromDate" class="control-label">选择时间</label>
+					                <input size="16" name="time" id="fromDate" type="text" readonly class="form-control form_date">
+					            </div>
+					            <div class="form-group col-md-12" style="margin-top: 10px">
+					            	<label class="control-label"></label>
+					                <button class="btn btn-default col-md-12">开始搜索</button>
+					            </div>
+					            </form>
+                            </div>
+                        </div>
+               </div>
+                <!-- /.row -->
             </div>
             <!-- /.container-fluid -->
-
         </div>
         <!-- /#page-wrapper -->
 
     </div>
     <!-- /#wrapper -->
-
-    <!-- jQuery -->
-    <script src="${pageContext.request.contextPath}/static/js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="${pageContext.request.contextPath}/static/js/bootstrap.min.js"></script>
-
-    <!-- Morris Charts JavaScript -->
-    <script src="${pageContext.request.contextPath}/static/js/plugins/morris/raphael.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/js/plugins/morris/morris.min.js"></script>
-    <script src="j${pageContext.request.contextPath}/static/s/plugins/morris/morris-data.js"></script>
-
+	
+	<script type="text/javascript">
+	    $('.form_date').datetimepicker({
+	        language:  'zh-CN',
+	        format: 'yyyy-mm-dd',
+	        weekStart: 1,
+	        todayBtn:  1,
+	        autoclose: 1,
+	        todayHighlight: 1,
+	        startView: 2,
+	        minView: 2,
+	        forceParse: 0
+	    });
+	</script>
+   
 </body>
 
 </html>

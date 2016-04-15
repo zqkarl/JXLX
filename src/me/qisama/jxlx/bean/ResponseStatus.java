@@ -6,6 +6,7 @@ public class ResponseStatus {
 	private String message = "ok";
 	private Object data;
 	private Object data2;
+	private Object data3;
 
 	public Object getData() {
 		return data;
@@ -37,5 +38,13 @@ public class ResponseStatus {
 
 	public void setData2(Object data2) {
 		this.data2 = data2;
+	}
+
+	public Object getData3() {
+		return data3;
+	}
+
+	public void setData3(Object data3) {
+		this.data3 = data3;
 	}
 }
